@@ -16,6 +16,7 @@ from pyspark.sql.functions import pandas_udf
 import pyarrow.parquet as pq
 import glob
 import logging
+import time
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -35,6 +36,7 @@ def init_spark():
 # Load IMDB and SST-2 data to MongoDB
 def load_data_to_mongodb(spark):
     # IMDB dataset
+    start_time = time.time()
     logger.info("Loading IMDB dataset...")
     imdb_dataset = load_dataset("imdb")
     imdb_df = pd.concat([
@@ -55,6 +57,7 @@ def load_data_to_mongodb(spark):
     logger.info("Writing datasets to MongoDB...")
     imdb_spark_df.write.format("mongo").mode("append").save()
     sst2_spark_df.write.format("mongo").mode("append").save()
+    return time.time() - start_time
 
 # Batch tokenizer UDF
 def create_batch_tokenizer_udf(max_length=128):
@@ -79,34 +82,16 @@ def create_batch_tokenizer_udf(max_length=128):
     
     return pandas_udf(tokenize_batch, schema)
 
-# Preprocess data and save to Parquet, or reuse cached files
-def preprocess_data(spark, output_dir, max_length=128, force_reprocess=False):
-    # Check for cached Parquet files
-    train_path = test_path = sst2_test_path = None
-    train_collection = test_collection = sst2_collection = None
-    
-    for dir_name in os.listdir(output_dir):
-        if dir_name.startswith("train_"):
-            train_path = os.path.join(output_dir, dir_name)
-            train_collection = dir_name  # Use directory name as collection ID
-        elif dir_name.startswith("test_"):
-            test_path = os.path.join(output_dir, dir_name)
-            test_collection = dir_name
-        elif dir_name.startswith("sst2_"):
-            sst2_test_path = os.path.join(output_dir, dir_name)
-            sst2_collection = dir_name
-    
-    if (train_path and test_path and sst2_test_path) and not force_reprocess:
-        logger.info(f"Using cached Parquet files: train={train_path}, test={test_path}, sst2={sst2_test_path}")
-        return train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection
-    
-    logger.info("No cached Parquet files found or force_reprocess=True. Running preprocessing...")
-    
+# Preprocess data and save to Parquet
+def preprocess_data(spark, output_dir, max_length=128):
+    start_time = time.time()
+
     # Load and preprocess data
     logger.info("Reading data from MongoDB...")
     raw_df = spark.read.format("mongo").load()
     processed_df = raw_df.filter(length(col("text")) >= 10)
     
+
     # Apply distributed batch tokenization
     logger.info("Tokenizing data...")
     tokenize_udf = create_batch_tokenizer_udf(max_length)
@@ -144,7 +129,29 @@ def preprocess_data(spark, output_dir, max_length=128, force_reprocess=False):
     test_df.write.format("mongo").option("collection", test_collection).mode("overwrite").save()
     sst2_test_df.write.format("mongo").option("collection", sst2_collection).mode("overwrite").save()
     
-    return train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection
+    preprocess_time = time.time() - start_time
+    return train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection, preprocess_time
+
+# Check for cached Parquet files
+def check_cached_parquet(output_dir):
+    train_path = test_path = sst2_test_path = None
+    train_collection = test_collection = sst2_collection = None
+    
+    for dir_name in os.listdir(output_dir):
+        if dir_name.startswith("train_"):
+            train_path = os.path.join(output_dir, dir_name)
+            train_collection = dir_name
+        elif dir_name.startswith("test_"):
+            test_path = os.path.join(output_dir, dir_name)
+            test_collection = dir_name
+        elif dir_name.startswith("sst2_"):
+            sst2_test_path = os.path.join(output_dir, dir_name)
+            sst2_collection = dir_name
+    
+    if train_path and test_path and sst2_test_path:
+        logger.info(f"Found cached Parquet files: train={train_path}, test={test_path}, sst2={sst2_test_path}")
+        return train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection
+    return None
 
 # Lazy-loading Parquet dataset
 class LazyParquetDataset(IterableDataset):
@@ -193,7 +200,12 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
     sst2_test_loader = DataLoader(sst2_test_dataset, batch_size=batch_size, num_workers=0)
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5)
-    scaler = torch.cuda.amp.GradScaler()  # For mixed-precision training
+    # scaler = torch.cuda.amp.GradScaler()  # For mixed-precision training
+    scaler = torch.amp.GradScaler('cuda')  # For mixed-precision training
+    
+    # Measure training wall time
+    dist.barrier()  # Synchronize all ranks before timing
+    train_start_time = time.time()
     
     model.train()
     for epoch in range(epochs):
@@ -204,7 +216,8 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
             attention_mask = batch["attention_mask"].to(rank)
             labels = batch["labels"].to(rank)
             
-            with torch.cuda.amp.autocast():
+            # with torch.cuda.amp.autocast():
+            with torch.amp.autocast('cuda'):
                 outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=labels)
                 loss = outputs.loss
             
@@ -216,8 +229,20 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
             total_loss += loss.item()
             num_batches += 1
         
-        if rank == 0:
-            logger.info(f"Epoch {epoch+1}, Avg Loss: {total_loss / num_batches:.4f}")
+        logger.info(f"GPU[{rank}], Epoch {epoch+1}, Avg Loss: {total_loss / num_batches:.4f}")
+    
+    dist.barrier()  # Synchronize all ranks after training
+    train_end_time = time.time()
+    train_wall_time = train_end_time - train_start_time
+    
+    # Aggregate max training time across ranks
+    train_wall_time_tensor = torch.tensor(train_wall_time, dtype=torch.float64).cuda(rank)
+    dist.all_reduce(train_wall_time_tensor, op=dist.ReduceOp.MAX)
+    train_wall_time_max = train_wall_time_tensor.item()
+    
+    # Log training time only from rank 0
+    if rank == 0:
+        logger.info(f"Training wall time (max across ranks): {train_wall_time_max:.2f} seconds")
     
     model.eval()
     for dataset_name, loader in [("IMDB Test", test_loader), ("SST-2 Test", sst2_test_loader)]:
@@ -231,8 +256,7 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
                 predictions = torch.argmax(outputs.logits, dim=-1)
                 correct += (predictions == labels).sum().item()
                 total += labels.size(0)
-        if rank == 0:
-            logger.info(f"{dataset_name} Accuracy: {correct / total:.4f}")
+        logger.info(f"GPU[{rank}]: {dataset_name} Accuracy: {correct / total:.4f}")
     
     dist.destroy_process_group()
 
@@ -247,11 +271,25 @@ if __name__ == "__main__":
     output_dir = "processed_data"
     os.makedirs(output_dir, exist_ok=True)
     
-    # Load and preprocess data
-    logger.info("Loading data to MongoDB...")
-    load_data_to_mongodb(spark)
-    logger.info("Distributed preprocessing and saving to Parquet...")
-    train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection = preprocess_data(spark, output_dir)
+    # Check for cached Parquet files
+    # cached_data = check_cached_parquet(output_dir)
+    cached_data = None
+    train_path = test_path = sst2_test_path = train_collection = test_collection = sst2_collection = None
+    preprocess_time = 0
+    
+    if cached_data:
+        logger.info("Cached Parquet files found. Skipping data loading and preprocessing...")
+        train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection = cached_data
+    else:
+        # Load and preprocess data
+        logger.info("No cached Parquet files found. Running full pipeline...")
+        logger.info("Loading data to MongoDB...")
+        load_data_time = load_data_to_mongodb(spark)
+        logger.info(f"Data loading to MongoDB took {load_data_time:.2f} seconds")
+        
+        logger.info("Distributed preprocessing and saving to Parquet...")
+        train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection, preprocess_time = preprocess_data(spark, output_dir)
+        logger.info(f"Distributed preprocessing took {preprocess_time:.2f} seconds")
     
     # Run distributed training
     world_size = max(1, torch.cuda.device_count())
