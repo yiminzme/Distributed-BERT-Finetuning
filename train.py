@@ -21,6 +21,8 @@ import time
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+NUM_SPARK_EXECUTOR_CORE = 4
+NUM_GPUs = 1
 
 # Initialize Spark with MongoDB connector
 def init_spark():
@@ -28,6 +30,8 @@ def init_spark():
         .appName("Distributed BERT Fine-Tuning with Preprocessing") \
         .config("spark.driver.memory", "4g") \
         .config("spark.executor.memory", "4g") \
+        .config("spark.driver.cores", "2") \
+        .config("spark.executor.cores", str(NUM_SPARK_EXECUTOR_CORE) if NUM_SPARK_EXECUTOR_CORE else "4") \
         .config("spark.mongodb.input.uri", "mongodb://localhost:27017/sentiment_db.reviews") \
         .config("spark.mongodb.output.uri", "mongodb://localhost:27017/sentiment_db.reviews") \
         .config("spark.jars.packages", "org.mongodb.spark:mongo-spark-connector_2.12:3.0.1") \
@@ -91,7 +95,6 @@ def preprocess_data(spark, output_dir, max_length=128):
     raw_df = spark.read.format("mongo").load()
     processed_df = raw_df.filter(length(col("text")) >= 10)
     
-
     # Apply distributed batch tokenization
     logger.info("Tokenizing data...")
     tokenize_udf = create_batch_tokenizer_udf(max_length)
@@ -292,7 +295,7 @@ if __name__ == "__main__":
         logger.info(f"Distributed preprocessing took {preprocess_time:.2f} seconds")
     
     # Run distributed training
-    world_size = max(1, torch.cuda.device_count())
+    world_size = NUM_GPUs if NUM_GPUs else max(1, torch.cuda.device_count())
     logger.info(f"Using {world_size} GPU(s)")
     
     logger.info("Distributed fine-tuning...")
