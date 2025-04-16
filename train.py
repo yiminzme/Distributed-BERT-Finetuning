@@ -122,8 +122,8 @@ def train_and_evaluate(rank, world_size, train_dataset, test_dataset, sst2_test_
             loss.backward()
             optimizer.step()
             total_loss += loss.item()
-        if rank == 0:
-            print(f"Epoch {epoch+1}, Avg Loss: {total_loss / len(train_loader):.4f}")
+        # if rank==0:
+        print(f"GPU[{rank}]: Epoch {epoch+1}, Avg Loss: {total_loss / len(train_loader):.4f}")
     
     # Evaluate
     model.eval()
@@ -138,8 +138,8 @@ def train_and_evaluate(rank, world_size, train_dataset, test_dataset, sst2_test_
                 predictions = torch.argmax(outputs.logits, dim=-1)
                 correct += (predictions == labels).sum().item()
                 total += labels.size(0)
-        if rank == 0:
-            print(f"{dataset_name} Accuracy: {correct / total:.4f}")
+        # if rank == 0:
+        print(f"GPU[{rank}]: {dataset_name} Accuracy: {correct / total:.4f}")
     
     dist.destroy_process_group()
 
