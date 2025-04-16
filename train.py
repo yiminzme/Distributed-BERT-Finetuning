@@ -21,21 +21,30 @@ import time
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-NUM_SPARK_EXECUTOR_CORE = 4
-NUM_GPUs = 1
 
 # Initialize Spark with MongoDB connector
-def init_spark():
-    return SparkSession.builder \
+def init_spark(num_cpus = None):
+    # if num_spark_executor_core: logger.info(f"{num_spark_executor_core} cores for executor")
+    # else: logger.info(f"number of cores for executor UNDEFINED")
+    if num_cpus: logger.info(f"{num_cpus} cores for spark")
+    else: logger.info(f"num_cpus UNDEFINED")
+    spark = SparkSession.builder \
         .appName("Distributed BERT Fine-Tuning with Preprocessing") \
         .config("spark.driver.memory", "4g") \
         .config("spark.executor.memory", "4g") \
-        .config("spark.driver.cores", "2") \
-        .config("spark.executor.cores", str(NUM_SPARK_EXECUTOR_CORE) if NUM_SPARK_EXECUTOR_CORE else "4") \
+        .config("spark.executor.cores", 10) \
+        .config("spark.executor.instances", 9) \
+        .config("spark.default.parallelism", 96) \
         .config("spark.mongodb.input.uri", "mongodb://localhost:27017/sentiment_db.reviews") \
         .config("spark.mongodb.output.uri", "mongodb://localhost:27017/sentiment_db.reviews") \
         .config("spark.jars.packages", "org.mongodb.spark:mongo-spark-connector_2.12:3.0.1") \
         .getOrCreate()
+        # .config("spark.cores.max", num_cpus) \
+        # .config("spark.driver.cores", 2) \
+        # .config("spark.executor.cores", 4) \
+        # .config("spark.executor.instances", 3) \
+        # .config("spark.default.parallelism", 10) \
+    return spark
 
 # Load IMDB and SST-2 data to MongoDB
 def load_data_to_mongodb(spark):
@@ -44,8 +53,8 @@ def load_data_to_mongodb(spark):
     logger.info("Loading IMDB dataset...")
     imdb_dataset = load_dataset("imdb")
     imdb_df = pd.concat([
-        imdb_dataset["train"].to_pandas()[["text", "label"]].head(50),  # use 50 for debug
-        imdb_dataset["test"].to_pandas()[["text", "label"]].head(50)
+        imdb_dataset["train"].to_pandas()[["text", "label"]].head(2000),  # use 50 for debug
+        imdb_dataset["test"].to_pandas()[["text", "label"]].head(2000)
     ])
     imdb_df["source"] = "IMDB"
     imdb_spark_df = spark.createDataFrame(imdb_df).select(col("text"), col("label").cast("integer"), col("source"))
@@ -53,7 +62,7 @@ def load_data_to_mongodb(spark):
     # SST-2 dataset
     logger.info("Loading SST-2 dataset...")
     sst2_dataset = load_dataset("glue", "sst2")
-    sst2_df = sst2_dataset["train"].to_pandas()[["sentence", "label"]].head(50)  # use 50 for debug
+    sst2_df = sst2_dataset["train"].to_pandas()[["sentence", "label"]].head(2000)  # use 50 for debug
     sst2_df = sst2_df.rename(columns={"sentence": "text"})
     sst2_df["source"] = "SST-2"
     sst2_spark_df = spark.createDataFrame(sst2_df).select(col("text"), col("label").cast("integer"), col("source"))
@@ -184,7 +193,7 @@ class LazyParquetDataset(IterableDataset):
                     }
 
 # Training and evaluation
-def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection, batch_size=8, epochs=3):
+def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection, finetune_time, batch_size=8, epochs=3):
     os.environ["MASTER_ADDR"] = "localhost"
     os.environ["MASTER_PORT"] = "12345"
     dist.init_process_group(backend="nccl", rank=rank, world_size=world_size)
@@ -245,6 +254,7 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
     
     # Log training time only from rank 0
     if rank == 0:
+        finetune_time[0] = train_wall_time_max
         logger.info(f"Training wall time (max across ranks): {train_wall_time_max:.2f} seconds")
     
     model.eval()
@@ -265,10 +275,17 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
 
 # Main
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--num_cpus', type=int, default=4)
+    parser.add_argument('--num_gpus', type=int, default=1)
+    args = parser.parse_args()
+    NUM_CPUs = args.num_cpus
+    NUM_GPUs = args.num_gpus
     logger.info("Initializing Spark...")
-    os.environ['PYSPARK_PYTHON'] = '/home/goodh/miniconda3/envs/5003/bin/python'
-    os.environ['PYSPARK_DRIVER_PYTHON'] = '/home/goodh/miniconda3/envs/5003/bin/python'
-    spark = init_spark()
+    # os.environ['PYSPARK_PYTHON'] = '/home/goodh/miniconda3/envs/5003/bin/python'
+    # os.environ['PYSPARK_DRIVER_PYTHON'] = '/home/goodh/miniconda3/envs/5003/bin/python'
+    spark = init_spark(NUM_CPUs)
     
     # Output directory for Parquet files
     output_dir = "processed_data"
@@ -300,11 +317,18 @@ if __name__ == "__main__":
     
     logger.info("Distributed fine-tuning...")
     import torch.multiprocessing as mp
+    finetune_time = torch.zeros(world_size, dtype=torch.float32).share_memory_()
     mp.spawn(
         train_and_evaluate,
-        args=(world_size, train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection),
+        args=(world_size, train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection, finetune_time),
         nprocs=world_size,
         join=True
     )
+    
+    # append results
+    result = f"{time.strftime('%Y/%m/%d-%H:%M:%S')}\t{NUM_CPUs}\t\t{NUM_GPUs}\t\t{preprocess_time:.2f}\t\t{finetune_time[0]:.2f}\n"
+    logger.info(result)
+    with open("out/results.out", "a") as f:
+        f.write(result)
     
     spark.stop()

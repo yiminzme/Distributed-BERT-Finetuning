@@ -12,8 +12,14 @@ export PATH=~/mongodb/bin:$PATH
 export LD_LIBRARY_PATH=~/my_libs:$LD_LIBRARY_PATH
 
 module load cuda12.2/toolkit/12.2.2
-source ~/anaconda3/bin/activate 5003
+# source ~/anaconda3/bin/activate 5003
+# source ~/anaconda3/condabin/conda init
+rm -rf processed_data/*
 mkdir mongodb
 mongod --dbpath ./mongodb --port 27017 --fork --logpath ./mongodb/train.log
 
-srun python train.py
+num_cpus=96
+num_gpus=2
+echo "Current time: $(date +%Y%m%d_%H%M%S), num_cpus: $num_cpus, num_gpus: $num_gpus"
+
+srun python -u train.py --num_cpus $num_cpus --num_gpus $num_gpus
