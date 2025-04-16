@@ -1,3 +1,6 @@
 *.out
 mongodb/*
 out/*
+processed_data/*
+tmp.ipynb
+.vscode/
