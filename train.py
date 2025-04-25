@@ -7,7 +7,7 @@ from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 import torch.distributed as dist
 # from torch.nn.parallel import DistributedDataParallel as DDP
-from torch.utils.data import IterableDataset, DataLoader
+from torch.utils.data import IterableDataset, DataLoader, DistributedSampler
 import os
 import uuid
 import pandas as pd
@@ -276,7 +276,7 @@ class LazyParquetDataset(IterableDataset):
 # Training and evaluation
 def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection, finetune_time, batch_size=8, epochs=3, checkpoint_path=None):
     os.environ["MASTER_ADDR"] = "localhost"
-    os.environ["MASTER_PORT"] = "12345"
+    os.environ["MASTER_PORT"] = "12346"
     dist.init_process_group(backend="nccl", rank=rank, world_size=world_size)
     torch.cuda.set_device(rank)
     
@@ -285,15 +285,29 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
     test_dataset = LazyParquetDataset(test_path, rank, world_size)
     sst2_test_dataset = LazyParquetDataset(sst2_test_path, rank, world_size)
     
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, num_workers=0)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size, num_workers=0)
-    sst2_test_loader = DataLoader(sst2_test_dataset, batch_size=batch_size, num_workers=0)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, num_workers=0, drop_last=True)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, num_workers=0, drop_last=True)
+    sst2_test_loader = DataLoader(sst2_test_dataset, batch_size=batch_size, num_workers=0, drop_last=True)
+    
+    # 计算本地批次数量
+    local_train_batCnt, local_test_batCnt, local_sst2_test_batCnt = sum(1 for _ in train_loader), sum(1 for _ in test_loader), sum(1 for _ in sst2_test_loader)  # 统计本地数据加载器的批次数量
+    train_batCnt_tensor, test_batCnt_tensor, sst2_test_batCnt_tensor = torch.tensor(local_train_batCnt, dtype=torch.long).cuda(rank), torch.tensor(local_test_batCnt, dtype=torch.long).cuda(rank), torch.tensor(local_sst2_test_batCnt, dtype=torch.long).cuda(rank)
+    
+    # 确定全局最小批次数量
+    dist.all_reduce(train_batCnt_tensor, op=dist.ReduceOp.MIN)
+    dist.all_reduce(test_batCnt_tensor, op=dist.ReduceOp.MIN)
+    dist.all_reduce(sst2_test_batCnt_tensor, op=dist.ReduceOp.MIN)
+    global_train_batCnt, global_test_batCnt, global_sst2_test_batCnt = train_batCnt_tensor.item(), test_batCnt_tensor.item(), sst2_test_batCnt_tensor.item()
+    logger.info(f"Rank {rank}: Local train batch count = {local_train_batCnt}, Global min train batch count = {global_train_batCnt}")
+    logger.info(f"Rank {rank}: Local test batch count = {local_test_batCnt}, Global min test batch count = {global_test_batCnt}")
+    logger.info(f"Rank {rank}: Local sst2_test batch count = {local_sst2_test_batCnt}, Global min sst2_test batch count = {global_sst2_test_batCnt}")
+    
     
     model = BertForSequenceClassification.from_pretrained(
     	"bert-base-uncased", 
-	num_labels=2, 
-	hidden_dropout_prob=0.3, 
-	attention_probs_dropout_prob=0.3
+        num_labels=2, 
+        hidden_dropout_prob=0.3, 
+        attention_probs_dropout_prob=0.3
     ).to(rank)
     # ############## classifier head 微调
     # # 冻结 BERT 编码器
@@ -366,9 +380,15 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
     # model = DDP(model.to(rank), device_ids=[rank])
     model.train()
     for epoch in range(start_epoch, epochs):
-        total_loss = 0
-        num_batches = 0
-        for batch in train_loader:
+        total_loss, num_batches, local_total_loss = 0, 0, 0
+        train_loader_iter = iter(train_loader)
+        # for batch in train_loader:
+        for i in range(global_train_batCnt):
+            try:
+                batch = next(train_loader_iter)  # 获取下一批数据
+            except StopIteration:
+                logger.warning(f"Rank {rank}: Reached end of data at batch {i+1}/{global_train_batCnt}")
+                break  # 如果数据不足，提前退出
             input_ids = batch["input_ids"].to(rank)
             attention_mask = batch["attention_mask"].to(rank)
             labels = batch["labels"].to(rank)
@@ -381,6 +401,7 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
             loss_tensor = torch.tensor(loss.item()).cuda(rank)
             dist.all_reduce(loss_tensor, op=dist.ReduceOp.SUM)
             avg_loss = loss_tensor.item() / world_size
+            local_total_loss += loss_tensor.item()
             
             optimizer.zero_grad()
             scaler.scale(loss).backward()
@@ -391,22 +412,28 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
             num_batches += 1
 
         avg_epoch_loss = total_loss / num_batches
+        local_avg_epoch_loss = local_total_loss / num_batches
         if rank == 0:
             train_losses.append(avg_epoch_loss)
             logger.info(f"Epoch {epoch+1}, Avg Training Loss: {avg_epoch_loss:.4f}")
-        logger.info(f"GPU[{rank}], Epoch {epoch+1}, Avg Loss: {total_loss / num_batches:.4f}")
+        logger.info(f"GPU[{rank}], Epoch {epoch+1}, Avg Loss: {local_avg_epoch_loss:.4f}")
         
         # Evaluation phase
         model.eval()
-        for dataset_name, loader, eval_losses, eval_acc in [
-            ("IMDB Test", test_loader, imdb_eval_losses, imdb_eval_acc),
-            ("SST-2 Test", sst2_test_loader, sst2_eval_losses, sst2_eval_acc)
+        for dataset_name, loader, eval_losses, eval_acc, global_test_batCnt in [
+            ("IMDB Test", test_loader, imdb_eval_losses, imdb_eval_acc, global_test_batCnt),
+            ("SST-2 Test", sst2_test_loader, sst2_eval_losses, sst2_eval_acc, global_sst2_test_batCnt)
         ]:
-            total_eval_loss = 0
-            num_eval_batches = 0
-            correct = total = 0
+            total_eval_loss = num_eval_batches = correct = total = 0
+            test_loader_iter = iter(loader)
             with torch.no_grad():
-                for batch in loader:
+                # for batch in loader:
+                for i in range(global_test_batCnt):
+                    try:
+                        batch = next(test_loader_iter)  # 获取下一批数据
+                    except StopIteration:
+                        logger.warning(f"Rank {rank}: Reached end of data at batch {i+1}/{global_test_batCnt}")
+                        break  # 如果数据不足，提前退出
                     input_ids = batch["input_ids"].to(rank)
                     attention_mask = batch["attention_mask"].to(rank)
                     labels = batch["labels"].to(rank)
@@ -465,10 +492,16 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
         logger.info(f"Checkpoint saved at {checkpoint_path}")
     
     model.eval()
-    for dataset_name, loader in [("IMDB Test", test_loader), ("SST-2 Test", sst2_test_loader)]:
+    for dataset_name, loader, global_batCnt in [("IMDB Test", test_loader, global_test_batCnt), ("SST-2 Test", sst2_test_loader, global_sst2_test_batCnt)]:
         correct = total = 0
+        loader_iter = iter(loader)
         with torch.no_grad():
-            for batch in loader:
+            # for batch in loader:
+            for i in range(global_batCnt):
+                try: batch = next(loader_iter)
+                except:
+                    logger.warning(f"Rank {rank}: Reached end of data at batch {i+1}/{global_batCnt} for {dataset_name}")
+                    break
                 input_ids = batch["input_ids"].to(rank)
                 attention_mask = batch["attention_mask"].to(rank)
                 labels = batch["labels"].to(rank)
@@ -476,6 +509,11 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
                 predictions = torch.argmax(outputs.logits, dim=-1)
                 correct += (predictions == labels).sum().item()
                 total += labels.size(0)
+        correct_tensor, total_tensor = torch.tensor(correct).cuda(rank), torch.tensor(total).cuda(rank)
+        dist.all_reduce(correct_tensor, op=dist.ReduceOp.SUM)
+        dist.all_reduce(total_tensor, op=dist.ReduceOp.SUM)
+        if rank==0:
+            logger.info(f"{dataset_name} Accuracy: {correct_tensor.item() / total_tensor.item()}")
         logger.info(f"GPU[{rank}]: {dataset_name} Accuracy: {correct / total:.4f}")
     
     dist.destroy_process_group()
@@ -506,7 +544,7 @@ if __name__ == "__main__":
     
     # Check for cached Parquet files
     cached_data = None
-    # cached_data = check_cached_parquet(output_dir)
+    cached_data = check_cached_parquet(output_dir)
     train_path = test_path = sst2_test_path = train_collection = test_collection = sst2_collection = None
     preprocess_time = 0
     
