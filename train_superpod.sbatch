@@ -20,6 +20,9 @@ mongod --dbpath ./mongodb --port 27017 --fork --logpath ./mongodb/train.log
 
 num_cpus=96
 num_gpus=2
-echo "Current time: $(date +%Y%m%d_%H%M%S), num_cpus: $num_cpus, num_gpus: $num_gpus"
+num_train_samples=0
+batch_size=16
+epoches=20
+echo "Current time: $(date +%Y%m%d_%H%M%S), num_cpus[$num_cpus], num_gpus[$num_gpus], num_train_samples[$num_train_samples], batch_size[$batch_size], epoches[$epoches]"
 
-srun python -u train.py --num_cpus $num_cpus --num_gpus $num_gpus
+srun python -u train.py --num_cpus $num_cpus --num_gpus $num_gpus --num_train_samples $num_train_samples --batch_size $batch_size --epoches $epoches
