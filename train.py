@@ -1,12 +1,12 @@
 import pyspark
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, length
-from pyspark.sql.types import ArrayType, IntegerType, StructType, StructField
+from pyspark.sql.functions import col, length, udf
+from pyspark.sql.types import ArrayType, IntegerType, StructType, StructField, StringType
 from datasets import load_dataset
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 import torch.distributed as dist
-from torch.nn.parallel import DistributedDataParallel as DDP
+# from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.data import IterableDataset, DataLoader
 import os
 import uuid
@@ -17,12 +17,18 @@ import pyarrow.parquet as pq
 import glob
 import logging
 import time
+import re
+import matplotlib.pyplot as plt
+
+from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
+from torch.distributed.fsdp.wrap import transformer_auto_wrap_policy
+from transformers.models.bert.modeling_bert import BertLayer
+import json
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-import matplotlib.pyplot as plt
 
 def plot_loss_curves(checkpoint_path, output_dir="plots"):
     # Load the checkpoint
@@ -55,6 +61,25 @@ def plot_loss_curves(checkpoint_path, output_dir="plots"):
     plt.savefig(plot_path)
     plt.close()
     logger.info(f"Loss curves saved at {plot_path}")
+
+# Text preprocessing UDF
+def create_preprocess_text_udf():
+    def preprocess_text(text: str) -> str:
+        if not text or not isinstance(text, str):
+            return ""
+        # Remove punctuation
+        text = re.sub(r'[^\w\s]', '', text)
+        # # Remove non-alphanumeric characters (keep spaces)
+        # text = re.sub(r'[^a-z0-9\s]', '', text)
+        # Convert to lowercase
+        text = text.lower()
+        # Remove continuous whitespace
+        text = re.sub(r'\s+', ' ', text)
+        # Strip leading/trailing whitespaces
+        text = text.strip()
+        return text
+    
+    return udf(preprocess_text, StringType())
 
 # Initialize Spark with MongoDB connector
 def init_spark(num_cpus = None):
@@ -135,7 +160,28 @@ def preprocess_data(spark, imdb_spark_df, sst2_spark_df, output_dir, max_length=
     logger.info("Reading data from MongoDB...")
     # raw_df = spark.read.format("mongo").load()
     raw_df = imdb_spark_df.union(sst2_spark_df)
-    processed_df = raw_df.filter(length(col("text")) >= 10)
+    
+    # Apply text preprocessing
+    logger.info("Applying text preprocessing (lowercase, remove punctuation, non-alnum, continuous whitespace, strip)...")
+    preprocess_udf = create_preprocess_text_udf()
+    processed_df = raw_df.withColumn("text_cleaned", preprocess_udf(col("text")))
+    processed_df = processed_df.filter(length(col("text_cleaned")) >= 10).drop("text").withColumnRenamed("text_cleaned", "text")
+    
+    # def save_df_to_text(df, output_path):
+    #     logger.info(f"Saving dataset to text file: {output_path}")
+    #     pandas_df = df.select("text", "label", "source").toPandas()
+    #     with open(output_path, "w") as f:
+    #         for _, row in pandas_df.iterrows():
+    #             # Write each row as a JSON-like line for readability
+    #             record = {
+    #                 "text": row["text"],
+    #                 "label": int(row["label"]),
+    #                 "source": row["source"]
+    #             }
+    #             f.write(json.dumps(record) + "\n")
+    # # Save df as txt
+    # save_df_to_text(raw_df.limit(200), os.path.join(output_dir, "raw_df.txt"))
+    # save_df_to_text(processed_df.limit(200), os.path.join(output_dir, "processed_df.txt"))
     
     # Apply distributed batch tokenization
     logger.info("Tokenizing data...")
@@ -243,7 +289,12 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
     test_loader = DataLoader(test_dataset, batch_size=batch_size, num_workers=0)
     sst2_test_loader = DataLoader(sst2_test_dataset, batch_size=batch_size, num_workers=0)
     
-    model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=2, hidden_dropout_prob=0.3, attention_probs_dropout_prob=0.3)
+    model = BertForSequenceClassification.from_pretrained(
+    	"bert-base-uncased", 
+	num_labels=2, 
+	hidden_dropout_prob=0.3, 
+	attention_probs_dropout_prob=0.3
+    ).to(rank)
     # ############## classifier head 微调
     # # 冻结 BERT 编码器
     # for param in model.bert.parameters():
@@ -256,15 +307,41 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
     # 冻结所有层
     for param in model.bert.parameters():
         param.requires_grad = False
-    # 解冻最后两层和分类头
-    for param in model.bert.encoder.layer[-2:].parameters():
+    # 解冻最后的神经网络和分类头
+    for param in model.bert.encoder.layer[-1:].parameters():
         param.requires_grad = True
     for param in model.classifier.parameters():
         param.requires_grad = True
-    optimizer = torch.optim.AdamW(filter(lambda p: p.requires_grad, model.parameters()), lr=2e-5)
+    
+    # Fixed: Pass transformer_auto_wrap_policy as a callable
+    auto_wrap_policy = lambda module, recurse, nonwrapped_numel: transformer_auto_wrap_policy(
+        module=module,
+        recurse=recurse,
+        nonwrapped_numel=nonwrapped_numel,
+        transformer_layer_cls={BertLayer}
+    )
+    
+    model = FSDP(
+        model,
+        device_id=rank,
+        auto_wrap_policy=auto_wrap_policy,
+        sharding_strategy=torch.distributed.fsdp.ShardingStrategy.FULL_SHARD,
+        mixed_precision=torch.distributed.fsdp.MixedPrecision(
+            param_dtype=torch.float16,
+            reduce_dtype=torch.float16,
+            buffer_dtype=torch.float16
+        ),
+        use_orig_params=True
+    )
+    
+    # Optimizer only for trainable parameters
+    optimizer = torch.optim.AdamW(
+        filter(lambda p: p.requires_grad, model.parameters()),
+        lr=2e-5
+    )
     scaler = torch.amp.GradScaler('cuda')  # For mixed-precision training
     
-    train_losses, imdb_eval_losses, sst2_eval_losses = [], [], []
+    train_losses, imdb_eval_losses, sst2_eval_losses, imdb_eval_acc, sst2_eval_acc = [], [], [], [], []
     
     # Measure training wall time
     dist.barrier()  # Synchronize all ranks before timing
@@ -286,7 +363,7 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
             logger.info(f"Loaded checkpoint from {checkpoint_path}, resuming from epoch {start_epoch}")
             logger.info(f"Loaded losses: train={len(train_losses)}, imdb_eval={len(imdb_eval_losses)}, sst2_eval={len(sst2_eval_losses)}")
 
-    model = DDP(model.to(rank), device_ids=[rank])
+    # model = DDP(model.to(rank), device_ids=[rank])
     model.train()
     for epoch in range(start_epoch, epochs):
         total_loss = 0
@@ -321,9 +398,9 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
         
         # Evaluation phase
         model.eval()
-        for dataset_name, loader, eval_losses in [
-            ("IMDB Test", test_loader, imdb_eval_losses),
-            ("SST-2 Test", sst2_test_loader, sst2_eval_losses)
+        for dataset_name, loader, eval_losses, eval_acc in [
+            ("IMDB Test", test_loader, imdb_eval_losses, imdb_eval_acc),
+            ("SST-2 Test", sst2_test_loader, sst2_eval_losses, sst2_eval_acc)
         ]:
             total_eval_loss = 0
             num_eval_batches = 0
@@ -349,6 +426,7 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
             avg_eval_loss = total_eval_loss / num_eval_batches
             if rank == 0:
                 eval_losses.append(avg_eval_loss)
+                eval_acc.append(correct / total)
                 logger.info(f"Epoch {epoch+1}, {dataset_name} Eval Loss: {avg_eval_loss:.4f}, Accuracy: {correct / total:.4f}")
         model.train()
 
@@ -373,12 +451,14 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
         
         checkpoint = {
             'epoch': epochs,
-            'model_state_dict': model.module.state_dict(),  # Use .module to access the underlying model in DDP
+            'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
             'scaler_state_dict': scaler.state_dict(),
             'train_losses': train_losses,
             'imdb_eval_losses': imdb_eval_losses,
             'sst2_eval_losses': sst2_eval_losses,
+            'imdb_eval_acc': imdb_eval_acc,
+            'sst2_eval_acc': sst2_eval_acc,
         }
         
         torch.save(checkpoint, checkpoint_path)
