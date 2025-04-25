@@ -128,7 +128,7 @@ def create_batch_tokenizer_udf(max_length=128):
     return pandas_udf(tokenize_batch, schema)
 
 # Preprocess data and save to Parquet
-def preprocess_data(spark, imdb_spark_df, sst2_spark_df, output_dir, max_length=128, num_samples=None):
+def preprocess_data(spark, imdb_spark_df, sst2_spark_df, output_dir, max_length=256, num_samples=None):
     start_time = time.time()
 
     # Load and preprocess data
@@ -244,29 +244,27 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
     sst2_test_loader = DataLoader(sst2_test_dataset, batch_size=batch_size, num_workers=0)
     
     model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=2, hidden_dropout_prob=0.3, attention_probs_dropout_prob=0.3)
-    ############## classifier head 微调
-    # 冻结 BERT 编码器
-    for param in model.bert.parameters():
-        param.requires_grad = False
-    # 仅训练分类头
-    optimizer = torch.optim.AdamW(model.classifier.parameters(), lr=2e-5)
-    ############## 全量微调
-    # optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5) 
-    ############## 最后两层➕classifier head 微调
-    # # 冻结所有层
+    # ############## classifier head 微调
+    # # 冻结 BERT 编码器
     # for param in model.bert.parameters():
     #     param.requires_grad = False
-    # # 解冻最后两层和分类头
-    # for param in model.bert.encoder.layer[-2:].parameters():
-    #     param.requires_grad = True
-    # for param in model.classifier.parameters():
-    #     param.requires_grad = True
-    # optimizer = torch.optim.AdamW(filter(lambda p: p.requires_grad, model.parameters()), lr=2e-5)
+    # # 仅训练分类头
+    # optimizer = torch.optim.AdamW(model.classifier.parameters(), lr=2e-5)
+    # ############## 全量微调
+    # optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5) 
+    ############## 最后两层➕classifier head 微调
+    # 冻结所有层
+    for param in model.bert.parameters():
+        param.requires_grad = False
+    # 解冻最后两层和分类头
+    for param in model.bert.encoder.layer[-2:].parameters():
+        param.requires_grad = True
+    for param in model.classifier.parameters():
+        param.requires_grad = True
+    optimizer = torch.optim.AdamW(filter(lambda p: p.requires_grad, model.parameters()), lr=2e-5)
     scaler = torch.amp.GradScaler('cuda')  # For mixed-precision training
     
-    train_losses = []
-    imdb_eval_losses = []
-    sst2_eval_losses = []
+    train_losses, imdb_eval_losses, sst2_eval_losses = [], [], []
     
     # Measure training wall time
     dist.barrier()  # Synchronize all ranks before timing
