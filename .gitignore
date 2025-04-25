@@ -4,3 +4,6 @@ out/*
 processed_data/*
 tmp.ipynb
 .vscode/
+checkpoints/
+archive/
+plots/
