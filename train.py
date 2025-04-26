@@ -252,15 +252,22 @@ def check_cached_parquet(output_dir):
 class LazyParquetDataset(IterableDataset):
     def __init__(self, parquet_path, rank, world_size, batch_size=1000):
         self.parquet_files = sorted(glob.glob(os.path.join(parquet_path, "*.parquet")))
+        if not self.parquet_files:
+                logger.error(f"Rank {rank}: No Parquet files found in {parquet_path}")
+                raise ValueError("No Parquet files found")
         self.rank = rank
         self.world_size = world_size
         self.batch_size = batch_size
         
-        # Shard files across ranks
-        files_per_rank = len(self.parquet_files) // world_size
+        # Distribute files evenly
+        files_per_rank = max(1, len(self.parquet_files) // world_size)
         start_idx = rank * files_per_rank
-        end_idx = (rank + 1) * files_per_rank if rank < world_size - 1 else len(self.parquet_files)
+        end_idx = min((rank + 1) * files_per_rank, len(self.parquet_files))
         self.parquet_files = self.parquet_files[start_idx:end_idx]
+        if not self.parquet_files:
+            logger.warning(f"Rank {rank}: No Parquet files assigned")
+            self.parquet_files = [self.parquet_files[0]]  # Fallback to first file
+        logger.info(f"Rank {rank}: Assigned {len(self.parquet_files)} files: {self.parquet_files}")
     
     def __iter__(self):
         for file in self.parquet_files:
@@ -497,10 +504,19 @@ def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, 
     for dataset_name, loader, global_batCnt in [("IMDB Test", test_loader, global_test_batCnt), ("SST-2 Test", sst2_test_loader, global_sst2_test_batCnt)]:
         correct = total = 0
         loader_iter = iter(loader)
+        local_batCnt = sum(1 for _ in loader)
+        batCnt_tensor = torch.tensor(local_batCnt, dtype=torch.long).cuda(rank)
+        dist.all_reduce(batCnt_tensor, op=dist.ReduceOp.MIN)
+        global_batCnt = batCnt_tensor.item()
+        logger.info(f"Rank {rank}: {dataset_name} local batch count = {local_batCnt}, global min = {global_batCnt}")
         with torch.no_grad():
             # for batch in loader:
             for i in range(global_batCnt):
-                try: batch = next(loader_iter)
+                try: 
+                    batch = next(loader_iter)
+                    if batch["input_ids"].size(0) == 0:
+                        logger.warning(f"Rank {rank}: Empty batch {i+1} for {dataset_name}")
+                        continue
                 except:
                     logger.warning(f"Rank {rank}: Reached end of data at batch {i+1}/{global_batCnt} for {dataset_name}")
                     break
