@@ -1,0 +1,200 @@
+mkdir: cannot create directory ‘mongodb’: File exists
+about to fork child process, waiting until server is ready for connections.
+forked process: 2491986
+child process started successfully, parent exiting
+Current time: 20250426_220702, num_cpus[16], num_gpus[6], num_train_samples[2500], batch_size[16], epoches[10]
+INFO:__main__:Initializing Spark...
+INFO:__main__:16 cores for spark
+:: loading settings :: url = jar:file:/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/yzhengbs/.ivy2/cache
+The jars for the packages stored in: /home/yzhengbs/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-7bef1cd8-3343-4490-8c61-53f355a528c6;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 139ms :: artifacts dl 9ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-7bef1cd8-3343-4490-8c61-53f355a528c6
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/4ms)
+25/04/26 14:07:11 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 14:07:32 WARN TaskSetManager: Stage 0 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                        (0 + 16) / 16][Stage 0:===>                                                     (1 + 15) / 16][Stage 0:=======>                                                 (2 + 14) / 16]                                                                                INFO:__main__:Data loading to MongoDB took 22.95 seconds
+INFO:__main__:Distributed preprocessing and saving to Parquet...
+INFO:__main__:Reading data from MongoDB...
+INFO:__main__:Applying text preprocessing (lowercase, remove punctuation, non-alnum, continuous whitespace, strip)...
+INFO:__main__:Tokenizing data...
+INFO:__main__:num_samples[2500]
+INFO:__main__:num_partitions 16
+INFO:__main__:Writing Parquet files: train=processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a, test=processed_data/test_b240beada6a448ea8458b52e8ba67a92, sst2=processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c
+25/04/26 14:07:36 WARN TaskSetManager: Stage 2 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 2:>                                                        (0 + 16) / 32][Stage 2:==========================>                             (15 + 16) / 32][Stage 2:=================================================>       (28 + 4) / 32][Stage 2:===================================================>     (29 + 3) / 32][Stage 7:>                                                        (0 + 16) / 16]                                                                                INFO:__main__:23.0416s for train_df partition
+25/04/26 14:07:58 WARN TaskSetManager: Stage 8 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 8:>                                                        (0 + 16) / 32][Stage 8:========>                                                (5 + 16) / 32][Stage 8:===================>                                    (11 + 16) / 32][Stage 8:========================>                               (14 + 16) / 32][Stage 8:==========================>                             (15 + 16) / 32][Stage 8:=================================>                      (19 + 13) / 32][Stage 8:==========================================>              (24 + 8) / 32][Stage 8:=======================================================> (31 + 1) / 32]                                                                                INFO:__main__:16.2056s for test_df partition
+25/04/26 14:08:15 WARN TaskSetManager: Stage 14 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 14:===========================>                           (16 + 16) / 32][Stage 14:=============================================>          (26 + 6) / 32][Stage 14:=================================================>      (28 + 4) / 32][Stage 14:======================================================> (31 + 1) / 32]                                                                                INFO:__main__:6.9562s for sst2_df partition
+INFO:__main__:Distributed preprocessing took 46.36 seconds
+INFO:__main__:Using 6 GPU(s)
+INFO:__main__:Distributed fine-tuning...
+INFO:__mp_main__:Rank 0: Assigned 2 files: ['processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00000-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet', 'processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00001-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet']
+INFO:__mp_main__:Rank 0: Assigned 2 files: ['processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00000-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet', 'processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00001-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet']
+INFO:__mp_main__:Rank 0: Assigned 2 files: ['processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00000-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet', 'processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00001-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet']
+INFO:__mp_main__:Rank 5: Assigned 2 files: ['processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00010-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet', 'processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00011-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet']
+INFO:__mp_main__:Rank 5: Assigned 2 files: ['processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00010-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet', 'processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00011-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet']
+INFO:__mp_main__:Rank 5: Assigned 2 files: ['processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00010-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet', 'processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00011-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet']
+INFO:__mp_main__:Rank 2: Assigned 2 files: ['processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00004-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet', 'processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00005-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet']
+INFO:__mp_main__:Rank 3: Assigned 2 files: ['processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00006-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet', 'processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00007-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet']
+INFO:__mp_main__:Rank 4: Assigned 2 files: ['processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00008-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet', 'processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00009-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet']
+INFO:__mp_main__:Rank 3: Assigned 2 files: ['processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00006-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet', 'processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00007-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet']
+INFO:__mp_main__:Rank 4: Assigned 2 files: ['processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00008-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet', 'processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00009-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet']
+INFO:__mp_main__:Rank 2: Assigned 2 files: ['processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00004-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet', 'processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00005-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet']
+INFO:__mp_main__:Rank 4: Assigned 2 files: ['processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00008-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet', 'processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00009-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet']
+INFO:__mp_main__:Rank 3: Assigned 2 files: ['processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00006-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet', 'processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00007-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet']
+INFO:__mp_main__:Rank 2: Assigned 2 files: ['processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00004-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet', 'processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00005-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet']
+INFO:__mp_main__:Rank 1: Assigned 2 files: ['processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00002-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet', 'processed_data/train_3fe86b1e9a0d42efb4077bfe6885076a/part-00003-5ee93f8a-cdf9-435c-99bf-db90b6f5fd7c-c000.snappy.parquet']
+INFO:__mp_main__:Rank 1: Assigned 2 files: ['processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00002-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet', 'processed_data/test_b240beada6a448ea8458b52e8ba67a92/part-00003-bc1ab097-9745-4ecd-8bd8-2b8fc29711de-c000.snappy.parquet']
+INFO:__mp_main__:Rank 1: Assigned 2 files: ['processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00002-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet', 'processed_data/sst2_b577734f0f6e4d789f67b561adb3b98c/part-00003-f849b8ec-4647-4bfb-b6c9-8353c589b556-c000.snappy.parquet']
+INFO:__mp_main__:Rank 0: Local train batch count = 19, Global min train batch count = 19
+INFO:__mp_main__:Rank 2: Local train batch count = 19, Global min train batch count = 19
+INFO:__mp_main__:Rank 4: Local train batch count = 19, Global min train batch count = 19
+INFO:__mp_main__:Rank 5: Local train batch count = 19, Global min train batch count = 19
+INFO:__mp_main__:Rank 1: Local train batch count = 19, Global min train batch count = 19
+INFO:__mp_main__:Rank 3: Local train batch count = 19, Global min train batch count = 19
+INFO:__mp_main__:Rank 0: Local test batch count = 3, Global min test batch count = 3
+INFO:__mp_main__:Rank 4: Local test batch count = 3, Global min test batch count = 3
+INFO:__mp_main__:Rank 2: Local test batch count = 4, Global min test batch count = 3
+INFO:__mp_main__:Rank 5: Local test batch count = 3, Global min test batch count = 3
+INFO:__mp_main__:Rank 3: Local test batch count = 4, Global min test batch count = 3
+INFO:__mp_main__:Rank 1: Local test batch count = 3, Global min test batch count = 3
+INFO:__mp_main__:Rank 4: Local sst2_test batch count = 3, Global min sst2_test batch count = 3
+INFO:__mp_main__:Rank 0: Local sst2_test batch count = 3, Global min sst2_test batch count = 3
+INFO:__mp_main__:Rank 2: Local sst2_test batch count = 4, Global min sst2_test batch count = 3
+INFO:__mp_main__:Rank 5: Local sst2_test batch count = 3, Global min sst2_test batch count = 3
+INFO:__mp_main__:Rank 3: Local sst2_test batch count = 4, Global min sst2_test batch count = 3
+INFO:__mp_main__:Rank 1: Local sst2_test batch count = 3, Global min sst2_test batch count = 3
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+INFO:__mp_main__:Epoch 1, Avg Training Loss: 0.7066
+INFO:__mp_main__:GPU[2], Epoch 1, Avg Loss: 4.2395
+INFO:__mp_main__:GPU[3], Epoch 1, Avg Loss: 4.2395
+INFO:__mp_main__:GPU[1], Epoch 1, Avg Loss: 4.2395
+INFO:__mp_main__:GPU[0], Epoch 1, Avg Loss: 4.2395
+INFO:__mp_main__:GPU[5], Epoch 1, Avg Loss: 4.2395
+INFO:__mp_main__:GPU[4], Epoch 1, Avg Loss: 4.2395
+INFO:__mp_main__:Epoch 1, IMDB Test Eval Loss: 0.6923, Accuracy: 0.5208
+INFO:__mp_main__:Epoch 1, SST-2 Test Eval Loss: 0.7143, Accuracy: 0.3542
+INFO:__mp_main__:Epoch 2, Avg Training Loss: 0.6900
+INFO:__mp_main__:GPU[1], Epoch 2, Avg Loss: 4.1399
+INFO:__mp_main__:GPU[2], Epoch 2, Avg Loss: 4.1399
+INFO:__mp_main__:GPU[3], Epoch 2, Avg Loss: 4.1399
+INFO:__mp_main__:GPU[0], Epoch 2, Avg Loss: 4.1399
+INFO:__mp_main__:GPU[5], Epoch 2, Avg Loss: 4.1399
+INFO:__mp_main__:GPU[4], Epoch 2, Avg Loss: 4.1399
+INFO:__mp_main__:Epoch 2, IMDB Test Eval Loss: 0.6834, Accuracy: 0.5417
+INFO:__mp_main__:Epoch 2, SST-2 Test Eval Loss: 0.7100, Accuracy: 0.3542
+INFO:__mp_main__:Epoch 3, Avg Training Loss: 0.6886
+INFO:__mp_main__:GPU[1], Epoch 3, Avg Loss: 4.1314
+INFO:__mp_main__:GPU[2], Epoch 3, Avg Loss: 4.1314
+INFO:__mp_main__:GPU[3], Epoch 3, Avg Loss: 4.1314
+INFO:__mp_main__:GPU[0], Epoch 3, Avg Loss: 4.1314
+INFO:__mp_main__:GPU[5], Epoch 3, Avg Loss: 4.1314
+INFO:__mp_main__:GPU[4], Epoch 3, Avg Loss: 4.1314
+INFO:__mp_main__:Epoch 3, IMDB Test Eval Loss: 0.6713, Accuracy: 0.6667
+INFO:__mp_main__:Epoch 3, SST-2 Test Eval Loss: 0.7003, Accuracy: 0.3750
+INFO:__mp_main__:Epoch 4, Avg Training Loss: 0.6773
+INFO:__mp_main__:GPU[2], Epoch 4, Avg Loss: 4.0640
+INFO:__mp_main__:GPU[1], Epoch 4, Avg Loss: 4.0640
+INFO:__mp_main__:GPU[3], Epoch 4, Avg Loss: 4.0640
+INFO:__mp_main__:GPU[0], Epoch 4, Avg Loss: 4.0640
+INFO:__mp_main__:GPU[5], Epoch 4, Avg Loss: 4.0640
+INFO:__mp_main__:GPU[4], Epoch 4, Avg Loss: 4.0640
+INFO:__mp_main__:Epoch 4, IMDB Test Eval Loss: 0.6579, Accuracy: 0.7083
+INFO:__mp_main__:Epoch 4, SST-2 Test Eval Loss: 0.6926, Accuracy: 0.3542
+INFO:__mp_main__:Epoch 5, Avg Training Loss: 0.6732
+INFO:__mp_main__:GPU[2], Epoch 5, Avg Loss: 4.0393
+INFO:__mp_main__:GPU[1], Epoch 5, Avg Loss: 4.0393
+INFO:__mp_main__:GPU[3], Epoch 5, Avg Loss: 4.0393
+INFO:__mp_main__:GPU[0], Epoch 5, Avg Loss: 4.0393
+INFO:__mp_main__:GPU[5], Epoch 5, Avg Loss: 4.0393
+INFO:__mp_main__:GPU[4], Epoch 5, Avg Loss: 4.0393
+INFO:__mp_main__:Epoch 5, IMDB Test Eval Loss: 0.6406, Accuracy: 0.7708
+INFO:__mp_main__:Epoch 5, SST-2 Test Eval Loss: 0.6808, Accuracy: 0.4167
+INFO:__mp_main__:Epoch 6, Avg Training Loss: 0.6557
+INFO:__mp_main__:GPU[1], Epoch 6, Avg Loss: 3.9340
+INFO:__mp_main__:GPU[2], Epoch 6, Avg Loss: 3.9340
+INFO:__mp_main__:GPU[0], Epoch 6, Avg Loss: 3.9340
+INFO:__mp_main__:GPU[3], Epoch 6, Avg Loss: 3.9340
+INFO:__mp_main__:GPU[5], Epoch 6, Avg Loss: 3.9340
+INFO:__mp_main__:GPU[4], Epoch 6, Avg Loss: 3.9340
+INFO:__mp_main__:Epoch 6, IMDB Test Eval Loss: 0.6062, Accuracy: 0.7917
+INFO:__mp_main__:Epoch 6, SST-2 Test Eval Loss: 0.6614, Accuracy: 0.5000
+INFO:__mp_main__:Epoch 7, Avg Training Loss: 0.6301
+INFO:__mp_main__:GPU[1], Epoch 7, Avg Loss: 3.7805
+INFO:__mp_main__:GPU[2], Epoch 7, Avg Loss: 3.7805
+INFO:__mp_main__:GPU[3], Epoch 7, Avg Loss: 3.7805
+INFO:__mp_main__:GPU[0], Epoch 7, Avg Loss: 3.7805
+INFO:__mp_main__:GPU[5], Epoch 7, Avg Loss: 3.7805
+INFO:__mp_main__:GPU[4], Epoch 7, Avg Loss: 3.7805
+INFO:__mp_main__:Epoch 7, IMDB Test Eval Loss: 0.5514, Accuracy: 0.8125
+INFO:__mp_main__:Epoch 7, SST-2 Test Eval Loss: 0.6316, Accuracy: 0.7083
+INFO:__mp_main__:Epoch 8, Avg Training Loss: 0.5952
+INFO:__mp_main__:GPU[2], Epoch 8, Avg Loss: 3.5711
+INFO:__mp_main__:GPU[1], Epoch 8, Avg Loss: 3.5711
+INFO:__mp_main__:GPU[3], Epoch 8, Avg Loss: 3.5711
+INFO:__mp_main__:GPU[0], Epoch 8, Avg Loss: 3.5711
+INFO:__mp_main__:GPU[5], Epoch 8, Avg Loss: 3.5711
+INFO:__mp_main__:GPU[4], Epoch 8, Avg Loss: 3.5711
+INFO:__mp_main__:Epoch 8, IMDB Test Eval Loss: 0.4990, Accuracy: 0.8542
+INFO:__mp_main__:Epoch 8, SST-2 Test Eval Loss: 0.5939, Accuracy: 0.7500
+INFO:__mp_main__:GPU[2], Epoch 9, Avg Loss: 3.2927
+INFO:__mp_main__:Epoch 9, Avg Training Loss: 0.5488
+INFO:__mp_main__:GPU[1], Epoch 9, Avg Loss: 3.2927
+INFO:__mp_main__:GPU[3], Epoch 9, Avg Loss: 3.2927
+INFO:__mp_main__:GPU[0], Epoch 9, Avg Loss: 3.2927
+INFO:__mp_main__:GPU[5], Epoch 9, Avg Loss: 3.2927
+INFO:__mp_main__:GPU[4], Epoch 9, Avg Loss: 3.2927
+INFO:__mp_main__:Epoch 9, IMDB Test Eval Loss: 0.4564, Accuracy: 0.8125
+INFO:__mp_main__:Epoch 9, SST-2 Test Eval Loss: 0.5605, Accuracy: 0.7708
+INFO:__mp_main__:GPU[1], Epoch 10, Avg Loss: 3.0311
+INFO:__mp_main__:Epoch 10, Avg Training Loss: 0.5052
+INFO:__mp_main__:GPU[2], Epoch 10, Avg Loss: 3.0311
+INFO:__mp_main__:GPU[3], Epoch 10, Avg Loss: 3.0311
+INFO:__mp_main__:GPU[0], Epoch 10, Avg Loss: 3.0311
+INFO:__mp_main__:GPU[5], Epoch 10, Avg Loss: 3.0311
+INFO:__mp_main__:GPU[4], Epoch 10, Avg Loss: 3.0311
+INFO:__mp_main__:Epoch 10, IMDB Test Eval Loss: 0.4710, Accuracy: 0.8125
+INFO:__mp_main__:Epoch 10, SST-2 Test Eval Loss: 0.5357, Accuracy: 0.7500
+INFO:__mp_main__:Training wall time (max across ranks): 8.56 seconds
+slurmstepd: error: *** STEP 206991.0 ON dgx-55 CANCELLED AT 2025-04-26T22:17:27 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 206991 ON dgx-55 CANCELLED AT 2025-04-26T22:17:27 DUE TO TIME LIMIT ***

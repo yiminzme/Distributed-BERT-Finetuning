@@ -1,0 +1,995 @@
+mkdir: cannot create directory ‘mongodb’: File exists
+about to fork child process, waiting until server is ready for connections.
+forked process: 1883853
+ERROR: child process failed, exited with 100
+To see additional information in this output, start without the "--fork" option.
+Current time: 20250426_194953, num_cpus[16], num_gpus[4], num_train_samples[40000], batch_size[16], epoches[10]
+INFO:__main__:Initializing Spark...
+INFO:__main__:16 cores for spark
+:: loading settings :: url = jar:file:/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/yzhengbs/.ivy2/cache
+The jars for the packages stored in: /home/yzhengbs/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-855d6a0b-e65f-465f-acbe-f8dd84e48ff4;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 166ms :: artifacts dl 14ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-855d6a0b-e65f-465f-acbe-f8dd84e48ff4
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/8ms)
+25/04/26 11:50:10 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 11:50:33 WARN TaskSetManager: Stage 0 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                        (0 + 16) / 16]25/04/26 11:51:05 ERROR Executor: Exception in task 15.0 in stage 0.0 (TID 15)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 0.0 in stage 0.0 (TID 0)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 4.0 in stage 0.0 (TID 4)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 10.0 in stage 0.0 (TID 10)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 11.0 in stage 0.0 (TID 11)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 14.0 in stage 0.0 (TID 14)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 6.0 in stage 0.0 (TID 6)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 12.0 in stage 0.0 (TID 12)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 9.0 in stage 0.0 (TID 9)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 7.0 in stage 0.0 (TID 7)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 2.0 in stage 0.0 (TID 2)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 3.0 in stage 0.0 (TID 3)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 8.0 in stage 0.0 (TID 8)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 5.0 in stage 0.0 (TID 5)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 13.0 in stage 0.0 (TID 13)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 ERROR Executor: Exception in task 1.0 in stage 0.0 (TID 1)
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 11:51:05 WARN TaskSetManager: Lost task 3.0 in stage 0.0 (TID 3) (dgx-38.cm.cluster executor driver): com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+
+25/04/26 11:51:05 ERROR TaskSetManager: Task 3 in stage 0.0 failed 1 times; aborting job
+Traceback (most recent call last):
+  File "/home/yzhengbs/vinc/5003/project/train.py", line 576, in <module>
+    load_data_time, imdb_spark_df, sst2_spark_df = load_data_to_mongodb(spark)
+  File "/home/yzhengbs/vinc/5003/project/train.py", line 130, in load_data_to_mongodb
+    imdb_spark_df.write.format("mongo").mode("append").save()
+  File "/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/pyspark/sql/readwriter.py", line 1461, in save
+    self._jwrite.save()
+  File "/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+  File "/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/pyspark/errors/exceptions/captured.py", line 179, in deco
+    return f(*a, **kw)
+  File "/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/py4j/protocol.py", line 326, in get_return_value
+    raise Py4JJavaError(
+py4j.protocol.Py4JJavaError: An error occurred while calling o103.save.
+: org.apache.spark.SparkException: Job aborted due to stage failure: Task 3 in stage 0.0 failed 1 times, most recent failure: Lost task 3.0 in stage 0.0 (TID 3) (dgx-38.cm.cluster executor driver): com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+
+Driver stacktrace:
+	at org.apache.spark.scheduler.DAGScheduler.failJobAndIndependentStages(DAGScheduler.scala:2856)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$abortStage$2(DAGScheduler.scala:2792)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$abortStage$2$adapted(DAGScheduler.scala:2791)
+	at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
+	at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
+	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
+	at org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:2791)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$handleTaskSetFailed$1(DAGScheduler.scala:1247)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$handleTaskSetFailed$1$adapted(DAGScheduler.scala:1247)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:1247)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:3060)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:2994)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:2983)
+	at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:49)
+	at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:989)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2393)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2414)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2433)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2458)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$1(RDD.scala:1039)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:410)
+	at org.apache.spark.rdd.RDD.foreachPartition(RDD.scala:1037)
+	at com.mongodb.spark.MongoSpark$.save(MongoSpark.scala:120)
+	at com.mongodb.spark.MongoSpark$.save(MongoSpark.scala:169)
+	at com.mongodb.spark.sql.DefaultSource.createRelation(DefaultSource.scala:70)
+	at org.apache.spark.sql.execution.datasources.SaveIntoDataSourceCommand.run(SaveIntoDataSourceCommand.scala:48)
+	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult$lzycompute(commands.scala:75)
+	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult(commands.scala:73)
+	at org.apache.spark.sql.execution.command.ExecutedCommandExec.executeCollect(commands.scala:84)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:125)
+	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:201)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:108)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:900)
+	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:66)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:76)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:437)
+	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:98)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:85)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:83)
+	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:142)
+	at org.apache.spark.sql.DataFrameWriter.runCommand(DataFrameWriter.scala:869)
+	at org.apache.spark.sql.DataFrameWriter.saveToV1Source(DataFrameWriter.scala:391)
+	at org.apache.spark.sql.DataFrameWriter.saveInternal(DataFrameWriter.scala:364)
+	at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:251)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused (Connection refused)}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:177)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:41)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:147)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:98)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:278)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:202)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	... 1 more
+
+INFO:py4j.clientserver:Closing down clientserver connection
+srun: error: dgx-38: task 0: Exited with exit code 1
+mkdir: cannot create directory ‘mongodb’: File exists
+about to fork child process, waiting until server is ready for connections.
+forked process: 1887638
+child process started successfully, parent exiting
+Current time: 20250426_195224, num_cpus[16], num_gpus[4], num_train_samples[40000], batch_size[16], epoches[10]
+INFO:__main__:Initializing Spark...
+INFO:__main__:16 cores for spark
+:: loading settings :: url = jar:file:/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/yzhengbs/.ivy2/cache
+The jars for the packages stored in: /home/yzhengbs/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-3f918769-1d1c-4b85-aa74-b97bd5b48129;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 137ms :: artifacts dl 11ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-3f918769-1d1c-4b85-aa74-b97bd5b48129
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/6ms)
+25/04/26 11:52:32 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 11:52:53 WARN TaskSetManager: Stage 0 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                        (0 + 16) / 16][Stage 0:===>                                                     (1 + 15) / 16][Stage 0:===================================>                     (10 + 6) / 16]                                                                                INFO:__main__:Data loading to MongoDB took 22.53 seconds
+INFO:__main__:Distributed preprocessing and saving to Parquet...
+INFO:__main__:Reading data from MongoDB...
+INFO:__main__:Applying text preprocessing (lowercase, remove punctuation, non-alnum, continuous whitespace, strip)...
+INFO:__main__:Tokenizing data...
+INFO:__main__:num_samples[40000]
+INFO:__main__:num_partitions 16
+INFO:__main__:Writing Parquet files: train=processed_data/train_9c655c35e3134f56bb7925c356277f2e, test=processed_data/test_84931311908c4806bf72a57bda58fd4d, sst2=processed_data/sst2_fa7baf180f6e473897fbfa2290b65665
+25/04/26 11:52:57 WARN TaskSetManager: Stage 2 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 2:>                                                        (0 + 16) / 32][Stage 2:===>                                                     (2 + 16) / 32][Stage 2:=====>                                                   (3 + 16) / 32][Stage 2:================>                                        (9 + 16) / 32][Stage 2:==========================>                             (15 + 16) / 32][Stage 2:=================================>                      (19 + 13) / 32][Stage 2:===================================>                    (20 + 12) / 32][Stage 2:========================================>                (23 + 9) / 32][Stage 2:==============================================>          (26 + 6) / 32][Stage 2:===================================================>     (29 + 3) / 32][Stage 7:>                                                        (0 + 16) / 16]                                                                                INFO:__main__:24.0602s for train_df partition
+25/04/26 11:53:21 WARN TaskSetManager: Stage 8 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 8:>                                                        (0 + 16) / 32][Stage 8:===>                                                     (2 + 16) / 32][Stage 8:============>                                            (7 + 16) / 32][Stage 8:========================>                               (14 + 17) / 32][Stage 8:====================================>                   (21 + 11) / 32][Stage 8:========================================>                (23 + 9) / 32][Stage 8:==========================================>              (24 + 8) / 32][Stage 8:==============================================>          (26 + 6) / 32]                                                                                INFO:__main__:14.4143s for test_df partition
+25/04/26 11:53:35 WARN TaskSetManager: Stage 14 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 14:===========================>                           (16 + 16) / 32][Stage 14:=============================>                         (17 + 15) / 32][Stage 14:==================================================>     (29 + 3) / 32][Stage 14:======================================================> (31 + 1) / 32]                                                                                INFO:__main__:7.9431s for sst2_df partition
+INFO:__main__:Distributed preprocessing took 46.58 seconds
+INFO:__main__:Using 4 GPU(s)
+INFO:__main__:Distributed fine-tuning...
+INFO:__mp_main__:Rank 0: Assigned 4 files: ['processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00000-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00001-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00002-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00003-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet']
+INFO:__mp_main__:Rank 0: Assigned 4 files: ['processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00000-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00001-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00002-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00003-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet']
+INFO:__mp_main__:Rank 0: Assigned 4 files: ['processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00000-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00001-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00002-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00003-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet']
+INFO:__mp_main__:Rank 3: Assigned 4 files: ['processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00012-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00013-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00014-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00015-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet']
+INFO:__mp_main__:Rank 2: Assigned 4 files: ['processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00008-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00009-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00010-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00011-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet']
+INFO:__mp_main__:Rank 2: Assigned 4 files: ['processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00008-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00009-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00010-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00011-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet']
+INFO:__mp_main__:Rank 3: Assigned 4 files: ['processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00012-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00013-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00014-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00015-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet']
+INFO:__mp_main__:Rank 2: Assigned 4 files: ['processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00008-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00009-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00010-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00011-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet']
+INFO:__mp_main__:Rank 3: Assigned 4 files: ['processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00012-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00013-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00014-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00015-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet']
+INFO:__mp_main__:Rank 1: Assigned 4 files: ['processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00004-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00005-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00006-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet', 'processed_data/train_9c655c35e3134f56bb7925c356277f2e/part-00007-661dfc0c-bfb3-40ec-b5ad-b2b7dd652861-c000.snappy.parquet']
+INFO:__mp_main__:Rank 1: Assigned 4 files: ['processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00004-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00005-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00006-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet', 'processed_data/test_84931311908c4806bf72a57bda58fd4d/part-00007-5c1f8630-0665-4092-9b1e-fdedf9dfdb8c-c000.snappy.parquet']
+INFO:__mp_main__:Rank 1: Assigned 4 files: ['processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00004-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00005-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00006-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet', 'processed_data/sst2_fa7baf180f6e473897fbfa2290b65665/part-00007-49816d3a-785a-4c9e-bcb9-74b01f867e3a-c000.snappy.parquet']
+INFO:__mp_main__:Rank 0: Local train batch count = 625, Global min train batch count = 625
+INFO:__mp_main__:Rank 1: Local train batch count = 625, Global min train batch count = 625
+INFO:__mp_main__:Rank 3: Local train batch count = 625, Global min train batch count = 625
+INFO:__mp_main__:Rank 2: Local train batch count = 625, Global min train batch count = 625
+INFO:__mp_main__:Rank 3: Local test batch count = 125, Global min test batch count = 125
+INFO:__mp_main__:Rank 0: Local test batch count = 125, Global min test batch count = 125
+INFO:__mp_main__:Rank 1: Local test batch count = 125, Global min test batch count = 125
+INFO:__mp_main__:Rank 2: Local test batch count = 125, Global min test batch count = 125
+INFO:__mp_main__:Rank 3: Local sst2_test batch count = 125, Global min sst2_test batch count = 125
+INFO:__mp_main__:Rank 0: Local sst2_test batch count = 125, Global min sst2_test batch count = 125
+INFO:__mp_main__:Rank 2: Local sst2_test batch count = 125, Global min sst2_test batch count = 125
+INFO:__mp_main__:Rank 1: Local sst2_test batch count = 125, Global min sst2_test batch count = 125
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+INFO:__mp_main__:GPU[2], Epoch 1, Avg Loss: 1.9749
+INFO:__mp_main__:GPU[3], Epoch 1, Avg Loss: 1.9749
+INFO:__mp_main__:GPU[1], Epoch 1, Avg Loss: 1.9749
+INFO:__mp_main__:Epoch 1, Avg Training Loss: 0.4937
+INFO:__mp_main__:GPU[0], Epoch 1, Avg Loss: 1.9749
+INFO:__mp_main__:Epoch 1, IMDB Test Eval Loss: 0.3212, Accuracy: 0.8990
+INFO:__mp_main__:Epoch 1, SST-2 Test Eval Loss: 0.4428, Accuracy: 0.7880
+INFO:__mp_main__:GPU[2], Epoch 2, Avg Loss: 1.5227
+INFO:__mp_main__:GPU[1], Epoch 2, Avg Loss: 1.5227
+INFO:__mp_main__:GPU[3], Epoch 2, Avg Loss: 1.5227
+INFO:__mp_main__:Epoch 2, Avg Training Loss: 0.3807
+INFO:__mp_main__:GPU[0], Epoch 2, Avg Loss: 1.5227
+INFO:__mp_main__:Epoch 2, IMDB Test Eval Loss: 0.2952, Accuracy: 0.9090
+INFO:__mp_main__:Epoch 2, SST-2 Test Eval Loss: 0.4250, Accuracy: 0.7970
+INFO:__mp_main__:GPU[2], Epoch 3, Avg Loss: 1.4402
+INFO:__mp_main__:GPU[1], Epoch 3, Avg Loss: 1.4402
+INFO:__mp_main__:GPU[3], Epoch 3, Avg Loss: 1.4402
+INFO:__mp_main__:Epoch 3, Avg Training Loss: 0.3600
+INFO:__mp_main__:GPU[0], Epoch 3, Avg Loss: 1.4402
+INFO:__mp_main__:Epoch 3, IMDB Test Eval Loss: 0.2963, Accuracy: 0.9090
+INFO:__mp_main__:Epoch 3, SST-2 Test Eval Loss: 0.4114, Accuracy: 0.8040
+INFO:__mp_main__:GPU[1], Epoch 4, Avg Loss: 1.4602
+INFO:__mp_main__:GPU[2], Epoch 4, Avg Loss: 1.4602
+INFO:__mp_main__:GPU[3], Epoch 4, Avg Loss: 1.4602
+INFO:__mp_main__:Epoch 4, Avg Training Loss: 0.3651
+INFO:__mp_main__:GPU[0], Epoch 4, Avg Loss: 1.4602
+INFO:__mp_main__:Epoch 4, IMDB Test Eval Loss: 0.3010, Accuracy: 0.9060
+INFO:__mp_main__:Epoch 4, SST-2 Test Eval Loss: 0.3966, Accuracy: 0.8175
+INFO:__mp_main__:GPU[2], Epoch 5, Avg Loss: 1.4225
+INFO:__mp_main__:GPU[1], Epoch 5, Avg Loss: 1.4225
+INFO:__mp_main__:GPU[3], Epoch 5, Avg Loss: 1.4225
+INFO:__mp_main__:Epoch 5, Avg Training Loss: 0.3556
+INFO:__mp_main__:GPU[0], Epoch 5, Avg Loss: 1.4225
+INFO:__mp_main__:Epoch 5, IMDB Test Eval Loss: 0.2913, Accuracy: 0.9070
+INFO:__mp_main__:Epoch 5, SST-2 Test Eval Loss: 0.3984, Accuracy: 0.8225
+INFO:__mp_main__:GPU[2], Epoch 6, Avg Loss: 1.3688
+INFO:__mp_main__:GPU[1], Epoch 6, Avg Loss: 1.3688
+INFO:__mp_main__:Epoch 6, Avg Training Loss: 0.3422
+INFO:__mp_main__:GPU[3], Epoch 6, Avg Loss: 1.3688
+INFO:__mp_main__:GPU[0], Epoch 6, Avg Loss: 1.3688
+INFO:__mp_main__:Epoch 6, IMDB Test Eval Loss: 0.2862, Accuracy: 0.9065
+INFO:__mp_main__:Epoch 6, SST-2 Test Eval Loss: 0.3990, Accuracy: 0.8185
+INFO:__mp_main__:GPU[1], Epoch 7, Avg Loss: 1.3641
+INFO:__mp_main__:GPU[2], Epoch 7, Avg Loss: 1.3641
+INFO:__mp_main__:Epoch 7, Avg Training Loss: 0.3410
+INFO:__mp_main__:GPU[0], Epoch 7, Avg Loss: 1.3641
+INFO:__mp_main__:GPU[3], Epoch 7, Avg Loss: 1.3641
+INFO:__mp_main__:Epoch 7, IMDB Test Eval Loss: 0.2925, Accuracy: 0.9045
+INFO:__mp_main__:Epoch 7, SST-2 Test Eval Loss: 0.3997, Accuracy: 0.8225
+INFO:__mp_main__:GPU[2], Epoch 8, Avg Loss: 1.3700
+INFO:__mp_main__:GPU[1], Epoch 8, Avg Loss: 1.3700
+INFO:__mp_main__:GPU[3], Epoch 8, Avg Loss: 1.3700
+INFO:__mp_main__:Epoch 8, Avg Training Loss: 0.3425
+INFO:__mp_main__:GPU[0], Epoch 8, Avg Loss: 1.3700
+INFO:__mp_main__:Epoch 8, IMDB Test Eval Loss: 0.2907, Accuracy: 0.9015
+INFO:__mp_main__:Epoch 8, SST-2 Test Eval Loss: 0.3984, Accuracy: 0.8225
+INFO:__mp_main__:GPU[2], Epoch 9, Avg Loss: nan
+INFO:__mp_main__:GPU[3], Epoch 9, Avg Loss: nan
+INFO:__mp_main__:GPU[1], Epoch 9, Avg Loss: nan
+INFO:__mp_main__:Epoch 9, Avg Training Loss: nan
+INFO:__mp_main__:GPU[0], Epoch 9, Avg Loss: nan
+INFO:__mp_main__:Epoch 9, IMDB Test Eval Loss: nan, Accuracy: 0.5185
+INFO:__mp_main__:Epoch 9, SST-2 Test Eval Loss: nan, Accuracy: 0.4505
+INFO:__mp_main__:GPU[2], Epoch 10, Avg Loss: nan
+INFO:__mp_main__:GPU[1], Epoch 10, Avg Loss: nan
+INFO:__mp_main__:GPU[3], Epoch 10, Avg Loss: nan
+INFO:__mp_main__:Epoch 10, Avg Training Loss: nan
+INFO:__mp_main__:GPU[0], Epoch 10, Avg Loss: nan
+INFO:__mp_main__:Epoch 10, IMDB Test Eval Loss: nan, Accuracy: 0.5185
+INFO:__mp_main__:Epoch 10, SST-2 Test Eval Loss: nan, Accuracy: 0.4505
+INFO:__mp_main__:Training wall time (max across ranks): 253.39 seconds
+slurmstepd: error: *** JOB 206952 ON dgx-38 CANCELLED AT 2025-04-26T20:07:27 DUE TO TIME LIMIT ***
+slurmstepd: error: *** STEP 206952.0 ON dgx-38 CANCELLED AT 2025-04-26T20:07:27 DUE TO TIME LIMIT ***

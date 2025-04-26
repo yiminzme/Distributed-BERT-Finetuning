@@ -1,0 +1,1277 @@
+mkdir: cannot create directory ‘mongodb’: File exists
+about to fork child process, waiting until server is ready for connections.
+forked process: 3813785
+child process started successfully, parent exiting
+Current time: 20250426_183728, num_cpus[16], num_gpus[4], num_train_samples[2500], batch_size[16], epoches[10]
+INFO:__main__:Initializing Spark...
+INFO:__main__:16 cores for spark
+:: loading settings :: url = jar:file:/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/yzhengbs/.ivy2/cache
+The jars for the packages stored in: /home/yzhengbs/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-ad107976-3548-480f-aa5c-47b28e74898f;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 124ms :: artifacts dl 9ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-ad107976-3548-480f-aa5c-47b28e74898f
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/4ms)
+25/04/26 10:37:36 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 10:37:57 WARN TaskSetManager: Stage 0 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                        (0 + 16) / 16]25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:28, serverValue:20}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:29, serverValue:17}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:32, serverValue:19}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:19, serverValue:21}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:27, serverValue:30}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:31, serverValue:32}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:25, serverValue:25}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:17, serverValue:28}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:22, serverValue:23}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:18, serverValue:27}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:24, serverValue:18}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:21, serverValue:24}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:23, serverValue:31}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:26, serverValue:29}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:30, serverValue:22}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 WARN connection: Got socket exception on connection [connectionId{localValue:20, serverValue:26}] to localhost:27017. All connections to localhost:27017 will be closed.
+25/04/26 10:38:00 ERROR Executor: Exception in task 1.0 in stage 0.0 (TID 1)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 15.0 in stage 0.0 (TID 15)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 14.0 in stage 0.0 (TID 14)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 11.0 in stage 0.0 (TID 11)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 9.0 in stage 0.0 (TID 9)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 2.0 in stage 0.0 (TID 2)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 0.0 in stage 0.0 (TID 0)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 3.0 in stage 0.0 (TID 3)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 5.0 in stage 0.0 (TID 5)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 7.0 in stage 0.0 (TID 7)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 6.0 in stage 0.0 (TID 6)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 13.0 in stage 0.0 (TID 13)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 8.0 in stage 0.0 (TID 8)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 10.0 in stage 0.0 (TID 10)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 4.0 in stage 0.0 (TID 4)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 ERROR Executor: Exception in task 12.0 in stage 0.0 (TID 12)
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+25/04/26 10:38:00 WARN TaskSetManager: Lost task 9.0 in stage 0.0 (TID 9) (dgx-43.cm.cluster executor driver): com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+
+25/04/26 10:38:00 ERROR TaskSetManager: Task 9 in stage 0.0 failed 1 times; aborting job
+Traceback (most recent call last):
+  File "/home/yzhengbs/vinc/5003/project/train.py", line 576, in <module>
+    load_data_time, imdb_spark_df, sst2_spark_df = load_data_to_mongodb(spark)
+  File "/home/yzhengbs/vinc/5003/project/train.py", line 130, in load_data_to_mongodb
+    imdb_spark_df.write.format("mongo").mode("append").save()
+  File "/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/pyspark/sql/readwriter.py", line 1461, in save
+    self._jwrite.save()
+  File "/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+  File "/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/pyspark/errors/exceptions/captured.py", line 179, in deco
+    return f(*a, **kw)
+  File "/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/py4j/protocol.py", line 326, in get_return_value
+    raise Py4JJavaError(
+py4j.protocol.Py4JJavaError: An error occurred while calling o103.save.
+: org.apache.spark.SparkException: Job aborted due to stage failure: Task 9 in stage 0.0 failed 1 times, most recent failure: Lost task 9.0 in stage 0.0 (TID 9) (dgx-43.cm.cluster executor driver): com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+
+Driver stacktrace:
+	at org.apache.spark.scheduler.DAGScheduler.failJobAndIndependentStages(DAGScheduler.scala:2856)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$abortStage$2(DAGScheduler.scala:2792)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$abortStage$2$adapted(DAGScheduler.scala:2791)
+	at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
+	at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
+	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
+	at org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:2791)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$handleTaskSetFailed$1(DAGScheduler.scala:1247)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$handleTaskSetFailed$1$adapted(DAGScheduler.scala:1247)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:1247)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:3060)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:2994)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:2983)
+	at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:49)
+	at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:989)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2393)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2414)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2433)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2458)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$1(RDD.scala:1039)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:410)
+	at org.apache.spark.rdd.RDD.foreachPartition(RDD.scala:1037)
+	at com.mongodb.spark.MongoSpark$.save(MongoSpark.scala:120)
+	at com.mongodb.spark.MongoSpark$.save(MongoSpark.scala:169)
+	at com.mongodb.spark.sql.DefaultSource.createRelation(DefaultSource.scala:70)
+	at org.apache.spark.sql.execution.datasources.SaveIntoDataSourceCommand.run(SaveIntoDataSourceCommand.scala:48)
+	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult$lzycompute(commands.scala:75)
+	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult(commands.scala:73)
+	at org.apache.spark.sql.execution.command.ExecutedCommandExec.executeCollect(commands.scala:84)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:125)
+	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:201)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:108)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:900)
+	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:66)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:76)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:437)
+	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:98)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:85)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:83)
+	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:142)
+	at org.apache.spark.sql.DataFrameWriter.runCommand(DataFrameWriter.scala:869)
+	at org.apache.spark.sql.DataFrameWriter.saveToV1Source(DataFrameWriter.scala:391)
+	at org.apache.spark.sql.DataFrameWriter.saveInternal(DataFrameWriter.scala:364)
+	at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:251)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:579)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:444)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:298)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:258)
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:99)
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:500)
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:71)
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:224)
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:202)
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:118)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:419)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:245)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.access$700(MixedBulkWriteOperation.java:71)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:189)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation$1.call(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.OperationHelper.withReleasableConnection(OperationHelper.java:500)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:180)
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:71)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:441)
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:421)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$4(MongoSpark.scala:138)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3(MongoSpark.scala:122)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$3$adapted(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoConnector.$anonfun$withCollectionDo$1(MongoConnector.scala:186)
+	at com.mongodb.spark.MongoConnector.$anonfun$withDatabaseDo$1(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withMongoClientDo(MongoConnector.scala:154)
+	at com.mongodb.spark.MongoConnector.withDatabaseDo(MongoConnector.scala:171)
+	at com.mongodb.spark.MongoConnector.withCollectionDo(MongoConnector.scala:184)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2(MongoSpark.scala:121)
+	at com.mongodb.spark.MongoSpark$.$anonfun$save$2$adapted(MongoSpark.scala:120)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2(RDD.scala:1039)
+	at org.apache.spark.rdd.RDD.$anonfun$foreachPartition$2$adapted(RDD.scala:1039)
+	at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2433)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	... 1 more
+
+INFO:py4j.clientserver:Closing down clientserver connection
+srun: error: dgx-43: task 0: Exited with exit code 1
+mkdir: cannot create directory ‘mongodb’: File exists
+about to fork child process, waiting until server is ready for connections.
+forked process: 707217
+child process started successfully, parent exiting
+Current time: 20250426_193302, num_cpus[16], num_gpus[4], num_train_samples[2500], batch_size[16], epoches[10]
+INFO:__main__:Initializing Spark...
+INFO:__main__:16 cores for spark
+:: loading settings :: url = jar:file:/home/yzhengbs/anaconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/yzhengbs/.ivy2/cache
+The jars for the packages stored in: /home/yzhengbs/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-6f22ab90-2a89-4700-b0f3-f610cbda35f6;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 143ms :: artifacts dl 15ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-6f22ab90-2a89-4700-b0f3-f610cbda35f6
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/7ms)
+25/04/26 11:33:15 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 11:33:37 WARN TaskSetManager: Stage 0 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                        (0 + 16) / 16][Stage 0:==========>                                              (3 + 13) / 16]                                                                                INFO:__main__:Data loading to MongoDB took 23.81 seconds
+INFO:__main__:Distributed preprocessing and saving to Parquet...
+INFO:__main__:Reading data from MongoDB...
+INFO:__main__:Applying text preprocessing (lowercase, remove punctuation, non-alnum, continuous whitespace, strip)...
+INFO:__main__:Tokenizing data...
+INFO:__main__:num_samples[2500]
+INFO:__main__:num_partitions 16
+INFO:__main__:Writing Parquet files: train=processed_data/train_4613aa4da60d46b693c7807f2a1a4e37, test=processed_data/test_275a5d74095c41d4bfda684b738b71f6, sst2=processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2
+25/04/26 11:33:40 WARN TaskSetManager: Stage 2 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 2:>                                                        (0 + 16) / 32][Stage 2:===>                                                     (2 + 16) / 32][Stage 2:========>                                                (5 + 16) / 32][Stage 2:================>                                        (9 + 16) / 32][Stage 2:==========================>                             (15 + 16) / 32][Stage 2:=============================>                          (17 + 15) / 32][Stage 2:===============================>                        (18 + 14) / 32][Stage 2:=================================>                      (19 + 13) / 32][Stage 2:===================================>                    (20 + 12) / 32][Stage 2:======================================>                 (22 + 10) / 32][Stage 2:========================================>                (23 + 9) / 32][Stage 2:==========================================>              (24 + 8) / 32][Stage 2:=======================================================> (31 + 1) / 32][Stage 7:>                                                        (0 + 16) / 16]                                                                                INFO:__main__:23.6528s for train_df partition
+25/04/26 11:34:04 WARN TaskSetManager: Stage 8 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 8:>                                                        (0 + 16) / 32][Stage 8:========>                                                (5 + 16) / 32][Stage 8:============================>                           (16 + 16) / 32][Stage 8:=================================>                      (19 + 13) / 32][Stage 8:====================================>                   (21 + 11) / 32][Stage 8:======================================>                 (22 + 10) / 32][Stage 8:========================================>                (23 + 9) / 32][Stage 8:================================================>        (27 + 5) / 32][Stage 8:=====================================================>   (30 + 2) / 32][Stage 8:=======================================================> (31 + 1) / 32]                                                                                INFO:__main__:14.7523s for test_df partition
+25/04/26 11:34:18 WARN TaskSetManager: Stage 14 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 14:===========================>                           (16 + 16) / 32][Stage 14:=============================>                         (17 + 15) / 32][Stage 14:======================================================> (31 + 1) / 32]                                                                                INFO:__main__:7.0148s for sst2_df partition
+INFO:__main__:Distributed preprocessing took 45.58 seconds
+INFO:__main__:Using 4 GPU(s)
+INFO:__main__:Distributed fine-tuning...
+INFO:__mp_main__:Rank 0: Assigned 4 files: ['processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00000-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00001-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00002-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00003-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet']
+INFO:__mp_main__:Rank 0: Assigned 4 files: ['processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00000-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00001-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00002-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00003-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet']
+INFO:__mp_main__:Rank 0: Assigned 4 files: ['processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00000-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00001-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00002-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00003-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet']
+INFO:__mp_main__:Rank 3: Assigned 4 files: ['processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00012-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00013-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00014-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00015-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet']
+INFO:__mp_main__:Rank 1: Assigned 4 files: ['processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00004-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00005-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00006-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00007-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet']
+INFO:__mp_main__:Rank 3: Assigned 4 files: ['processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00012-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00013-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00014-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00015-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet']
+INFO:__mp_main__:Rank 1: Assigned 4 files: ['processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00004-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00005-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00006-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00007-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet']
+INFO:__mp_main__:Rank 3: Assigned 4 files: ['processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00012-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00013-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00014-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00015-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet']
+INFO:__mp_main__:Rank 1: Assigned 4 files: ['processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00004-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00005-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00006-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00007-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet']
+INFO:__mp_main__:Rank 2: Assigned 4 files: ['processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00008-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00009-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00010-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet', 'processed_data/train_4613aa4da60d46b693c7807f2a1a4e37/part-00011-855520ec-b7b8-49fb-be54-802b701a0892-c000.snappy.parquet']
+INFO:__mp_main__:Rank 2: Assigned 4 files: ['processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00008-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00009-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00010-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet', 'processed_data/test_275a5d74095c41d4bfda684b738b71f6/part-00011-ce47e0ae-647c-4ec1-a36e-26a2a0511c65-c000.snappy.parquet']
+INFO:__mp_main__:Rank 2: Assigned 4 files: ['processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00008-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00009-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00010-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet', 'processed_data/sst2_6c75242ae0e144e8966bda8c817cd6f2/part-00011-b947adbe-579c-4ee5-9160-4a0ead055ac2-c000.snappy.parquet']
+INFO:__mp_main__:Rank 3: Local train batch count = 39, Global min train batch count = 39
+INFO:__mp_main__:Rank 2: Local train batch count = 39, Global min train batch count = 39
+INFO:__mp_main__:Rank 3: Local test batch count = 7, Global min test batch count = 7
+INFO:__mp_main__:Rank 1: Local train batch count = 39, Global min train batch count = 39
+INFO:__mp_main__:Rank 0: Local train batch count = 39, Global min train batch count = 39
+INFO:__mp_main__:Rank 2: Local test batch count = 7, Global min test batch count = 7
+INFO:__mp_main__:Rank 3: Local sst2_test batch count = 7, Global min sst2_test batch count = 7
+INFO:__mp_main__:Rank 2: Local sst2_test batch count = 7, Global min sst2_test batch count = 7
+INFO:__mp_main__:Rank 1: Local test batch count = 8, Global min test batch count = 7
+INFO:__mp_main__:Rank 0: Local test batch count = 7, Global min test batch count = 7
+INFO:__mp_main__:Rank 1: Local sst2_test batch count = 8, Global min sst2_test batch count = 7
+INFO:__mp_main__:Rank 0: Local sst2_test batch count = 7, Global min sst2_test batch count = 7
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+INFO:__mp_main__:GPU[1], Epoch 1, Avg Loss: 2.7959
+INFO:__mp_main__:Epoch 1, Avg Training Loss: 0.6990
+INFO:__mp_main__:GPU[0], Epoch 1, Avg Loss: 2.7959
+INFO:__mp_main__:GPU[2], Epoch 1, Avg Loss: 2.7959
+INFO:__mp_main__:GPU[3], Epoch 1, Avg Loss: 2.7959
+INFO:__mp_main__:Epoch 1, IMDB Test Eval Loss: 0.6799, Accuracy: 0.5893
+INFO:__mp_main__:Epoch 1, SST-2 Test Eval Loss: 0.6858, Accuracy: 0.5625
+INFO:__mp_main__:GPU[2], Epoch 2, Avg Loss: 2.7391
+INFO:__mp_main__:GPU[3], Epoch 2, Avg Loss: 2.7391
+INFO:__mp_main__:GPU[1], Epoch 2, Avg Loss: 2.7391
+INFO:__mp_main__:Epoch 2, Avg Training Loss: 0.6848
+INFO:__mp_main__:GPU[0], Epoch 2, Avg Loss: 2.7391
+INFO:__mp_main__:Epoch 2, IMDB Test Eval Loss: 0.6518, Accuracy: 0.6875
+INFO:__mp_main__:Epoch 2, SST-2 Test Eval Loss: 0.6653, Accuracy: 0.6696
+INFO:__mp_main__:GPU[1], Epoch 3, Avg Loss: 2.6120
+INFO:__mp_main__:GPU[2], Epoch 3, Avg Loss: 2.6120
+INFO:__mp_main__:Epoch 3, Avg Training Loss: 0.6530
+INFO:__mp_main__:GPU[0], Epoch 3, Avg Loss: 2.6120
+INFO:__mp_main__:GPU[3], Epoch 3, Avg Loss: 2.6120
+INFO:__mp_main__:Epoch 3, IMDB Test Eval Loss: 0.6051, Accuracy: 0.6964
+INFO:__mp_main__:Epoch 3, SST-2 Test Eval Loss: 0.6439, Accuracy: 0.6696
+INFO:__mp_main__:GPU[2], Epoch 4, Avg Loss: 2.4046
+INFO:__mp_main__:GPU[3], Epoch 4, Avg Loss: 2.4046
+INFO:__mp_main__:GPU[1], Epoch 4, Avg Loss: 2.4046
+INFO:__mp_main__:Epoch 4, Avg Training Loss: 0.6012
+INFO:__mp_main__:GPU[0], Epoch 4, Avg Loss: 2.4046
+INFO:__mp_main__:Epoch 4, IMDB Test Eval Loss: 0.5569, Accuracy: 0.6964
+INFO:__mp_main__:Epoch 4, SST-2 Test Eval Loss: 0.6348, Accuracy: 0.6786
+INFO:__mp_main__:GPU[2], Epoch 5, Avg Loss: 2.1675
+INFO:__mp_main__:GPU[1], Epoch 5, Avg Loss: 2.1675
+INFO:__mp_main__:Epoch 5, Avg Training Loss: 0.5419
+INFO:__mp_main__:GPU[0], Epoch 5, Avg Loss: 2.1675
+INFO:__mp_main__:GPU[3], Epoch 5, Avg Loss: 2.1675
+INFO:__mp_main__:Epoch 5, IMDB Test Eval Loss: 0.4995, Accuracy: 0.7054
+INFO:__mp_main__:Epoch 5, SST-2 Test Eval Loss: 0.6156, Accuracy: 0.7054
+INFO:__mp_main__:GPU[2], Epoch 6, Avg Loss: 1.9903
+INFO:__mp_main__:GPU[1], Epoch 6, Avg Loss: 1.9903
+INFO:__mp_main__:Epoch 6, Avg Training Loss: 0.4976
+INFO:__mp_main__:GPU[0], Epoch 6, Avg Loss: 1.9903
+INFO:__mp_main__:GPU[3], Epoch 6, Avg Loss: 1.9903
+INFO:__mp_main__:Epoch 6, IMDB Test Eval Loss: 0.4411, Accuracy: 0.7500
+INFO:__mp_main__:Epoch 6, SST-2 Test Eval Loss: 0.5909, Accuracy: 0.7232
+INFO:__mp_main__:GPU[2], Epoch 7, Avg Loss: 1.8103
+INFO:__mp_main__:GPU[3], Epoch 7, Avg Loss: 1.8103
+INFO:__mp_main__:GPU[1], Epoch 7, Avg Loss: 1.8103
+INFO:__mp_main__:Epoch 7, Avg Training Loss: 0.4526
+INFO:__mp_main__:GPU[0], Epoch 7, Avg Loss: 1.8103
+INFO:__mp_main__:Epoch 7, IMDB Test Eval Loss: 0.4185, Accuracy: 0.7857
+INFO:__mp_main__:Epoch 7, SST-2 Test Eval Loss: 0.5728, Accuracy: 0.7054
+INFO:__mp_main__:GPU[2], Epoch 8, Avg Loss: 1.7244
+INFO:__mp_main__:GPU[1], Epoch 8, Avg Loss: 1.7244
+INFO:__mp_main__:GPU[3], Epoch 8, Avg Loss: 1.7244
+INFO:__mp_main__:Epoch 8, Avg Training Loss: 0.4311
+INFO:__mp_main__:GPU[0], Epoch 8, Avg Loss: 1.7244
+INFO:__mp_main__:Epoch 8, IMDB Test Eval Loss: 0.3514, Accuracy: 0.8571
+INFO:__mp_main__:Epoch 8, SST-2 Test Eval Loss: 0.5408, Accuracy: 0.7411
+INFO:__mp_main__:GPU[3], Epoch 9, Avg Loss: 1.6622
+INFO:__mp_main__:GPU[2], Epoch 9, Avg Loss: 1.6622
+INFO:__mp_main__:Epoch 9, Avg Training Loss: 0.4155
+INFO:__mp_main__:GPU[0], Epoch 9, Avg Loss: 1.6622
+INFO:__mp_main__:GPU[1], Epoch 9, Avg Loss: 1.6622
+INFO:__mp_main__:Epoch 9, IMDB Test Eval Loss: 0.3495, Accuracy: 0.8393
+INFO:__mp_main__:Epoch 9, SST-2 Test Eval Loss: 0.5365, Accuracy: 0.7500
+INFO:__mp_main__:Epoch 10, Avg Training Loss: 0.3981
+INFO:__mp_main__:GPU[0], Epoch 10, Avg Loss: 1.5925
+INFO:__mp_main__:GPU[1], Epoch 10, Avg Loss: 1.5925
+INFO:__mp_main__:GPU[3], Epoch 10, Avg Loss: 1.5925
+INFO:__mp_main__:GPU[2], Epoch 10, Avg Loss: 1.5925
+INFO:__mp_main__:Epoch 10, IMDB Test Eval Loss: 0.3508, Accuracy: 0.8304
+INFO:__mp_main__:Epoch 10, SST-2 Test Eval Loss: 0.5265, Accuracy: 0.7411
+INFO:__mp_main__:Training wall time (max across ranks): 17.02 seconds
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 206926 ON dgx-34 CANCELLED AT 2025-04-26T19:43:27 DUE TO TIME LIMIT ***
+slurmstepd: error: *** STEP 206926.0 ON dgx-34 CANCELLED AT 2025-04-26T19:43:27 DUE TO TIME LIMIT ***
