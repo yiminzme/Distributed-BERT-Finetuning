@@ -91,12 +91,14 @@ def init_spark(num_cpus = None):
         .appName("Distributed BERT Fine-Tuning with Preprocessing") \
         .config("spark.driver.memory", "4g") \
         .config("spark.executor.memory", "4g") \
-        .config("spark.cores.max", num_cpus) \
+        .config("spark.master", f"local[{num_cpus}]") \
+        .config("spark.sql.shuffle.partitions", num_cpus) \
         .config("spark.mongodb.input.uri", "mongodb://localhost:27017/sentiment_db.reviews") \
         .config("spark.mongodb.output.uri", "mongodb://localhost:27017/sentiment_db.reviews") \
         .config("spark.jars.packages", "org.mongodb.spark:mongo-spark-connector_2.12:3.0.1") \
         .config("spark.mongodb.input.partitionerOptions.partitionSizeMB", "256") \
-        .getOrCreate()
+        .getOrCreate() \
+        # .config("spark.cores.max", num_cpus) \
         # .config("spark.driver.cores", "2") \
         # .config("spark.executor.cores", str(num_spark_executor_core) if num_spark_executor_core else 4) \
         # .config("spark.executor.instances", 3) \
@@ -205,7 +207,7 @@ def preprocess_data(spark, imdb_spark_df, sst2_spark_df, output_dir, max_length=
         logger.info(f"num_samples[{num_samples}]")
     
     # Save to Parquet with dynamic partitioning
-    num_partitions = max(16, spark.sparkContext.defaultParallelism * 2)  # Adjust based on cluster size
+    num_partitions = int(spark.conf.get("spark.sql.shuffle.partitions"))
     logger.info(f"num_partitions {num_partitions}")
     train_path = os.path.join(output_dir, f"train_{uuid.uuid4().hex}")
     test_path = os.path.join(output_dir, f"test_{uuid.uuid4().hex}")
@@ -276,7 +278,7 @@ class LazyParquetDataset(IterableDataset):
 # Training and evaluation
 def train_and_evaluate(rank, world_size, train_path, test_path, sst2_test_path, train_collection, test_collection, sst2_collection, finetune_time, batch_size=8, epochs=3, checkpoint_path=None):
     os.environ["MASTER_ADDR"] = "localhost"
-    os.environ["MASTER_PORT"] = "12346"
+    os.environ["MASTER_PORT"] = "12347"
     dist.init_process_group(backend="nccl", rank=rank, world_size=world_size)
     torch.cuda.set_device(rank)
     
@@ -544,7 +546,7 @@ if __name__ == "__main__":
     
     # Check for cached Parquet files
     cached_data = None
-    cached_data = check_cached_parquet(output_dir)
+    # cached_data = check_cached_parquet(output_dir)
     train_path = test_path = sst2_test_path = train_collection = test_collection = sst2_collection = None
     preprocess_time = 0
     

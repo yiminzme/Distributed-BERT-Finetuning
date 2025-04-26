@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=dist_bert     # create a short name for your job
 #SBATCH --nodes=1                # node count
-#SBATCH --gpus=4                 # number of GPUs per node(only valid under large/normal partition)
+#SBATCH --gpus=1                 # number of GPUs per node(only valid under large/normal partition)
 #SBATCH --time=00:15:00          # total run time limit (HH:MM:SS)
 #SBATCH --partition=normal       # partition(large/normal/cpu) where you submit
 #SBATCH --account=mscbdt2024     # only require for multiple projects
@@ -20,10 +20,10 @@ mkdir mongodb
 mongod --dbpath ./mongodb --port 27017 --fork --logpath ./mongodb/train.log
 
 num_cpus=96
-num_gpus=4
-num_train_samples=1000
-batch_size=8
-epoches=3
+num_gpus=1
+num_train_samples=2500
+batch_size=16
+epoches=10
 echo "Current time: $(date +%Y%m%d_%H%M%S), num_cpus[$num_cpus], num_gpus[$num_gpus], num_train_samples[$num_train_samples], batch_size[$batch_size], epoches[$epoches]"
 
 srun python -u train.py --num_cpus $num_cpus --num_gpus $num_gpus --num_train_samples $num_train_samples --batch_size $batch_size --epoches $epoches
