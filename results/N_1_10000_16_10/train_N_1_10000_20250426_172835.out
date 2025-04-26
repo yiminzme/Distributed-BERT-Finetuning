@@ -1,0 +1,87 @@
+INFO:__main__:Initializing Spark...
+INFO:__main__:2 cores for spark
+25/04/26 17:28:39 WARN Utils: Your hostname, yPC resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+25/04/26 17:28:39 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/goodh/.ivy2/cache
+The jars for the packages stored in: /home/goodh/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-a0793c2b-6756-4af2-843d-4bd49d64c2fe;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 82ms :: artifacts dl 3ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-a0793c2b-6756-4af2-843d-4bd49d64c2fe
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/3ms)
+25/04/26 17:28:39 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/26 17:28:39 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 17:29:08 WARN TaskSetManager: Stage 0 contains a task of very large size (31750 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                          (0 + 2) / 2]                                                                                25/04/26 17:29:10 WARN TaskSetManager: Stage 1 contains a task of very large size (2075 KiB). The maximum recommended task size is 1000 KiB.
+INFO:__main__:Data loading to MongoDB took 30.71 seconds
+INFO:__main__:Distributed preprocessing and saving to Parquet...
+INFO:__main__:Reading data from MongoDB...
+INFO:__main__:Applying text preprocessing (lowercase, remove punctuation, non-alnum, continuous whitespace, strip)...
+INFO:__main__:Tokenizing data...
+INFO:__main__:num_samples[10000]
+INFO:__main__:num_partitions 2
+INFO:__main__:Writing Parquet files: train=processed_data/train_6f3d0bd88eac458bb45c5de30ce3e6d7, test=processed_data/test_c2ab591b523541eb95dc314bb8d0572f, sst2=processed_data/sst2_40d7d9ed31ef44388faa9aa929e83317
+25/04/26 17:29:11 WARN TaskSetManager: Stage 2 contains a task of very large size (31750 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 2:>                                                          (0 + 2) / 4][Stage 2:>                                                          (0 + 2) / 4][Stage 2:==============>                                            (1 + 2) / 4][Stage 2:=============================>                             (2 + 2) / 4][Stage 2:============================================>              (3 + 1) / 4][Stage 7:>                                                          (0 + 2) / 2]                                                                                INFO:__main__:80.2829s for train_df partition
+25/04/26 17:30:31 WARN TaskSetManager: Stage 8 contains a task of very large size (31750 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 8:>                                                          (0 + 2) / 4][Stage 8:>                                                          (0 + 2) / 4][Stage 8:==============>                                            (1 + 2) / 4][Stage 8:=============================>                             (2 + 2) / 4][Stage 8:============================================>              (3 + 1) / 4]                                                                                INFO:__main__:76.1012s for test_df partition
+25/04/26 17:31:47 WARN TaskSetManager: Stage 14 contains a task of very large size (31750 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 14:=============================>                            (2 + 2) / 4][Stage 14:===========================================>              (3 + 1) / 4]                                                                                INFO:__main__:1.8446s for sst2_df partition
+INFO:__main__:Distributed preprocessing took 158.43 seconds
+INFO:__main__:Using 1 GPU(s)
+INFO:__main__:Distributed fine-tuning...
+Traceback (most recent call last):
+  File "/home/goodh/vinc/5003/project/train.py", line 574, in <module>
+    mp.spawn(
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/multiprocessing/spawn.py", line 340, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method="spawn")
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/multiprocessing/spawn.py", line 296, in start_processes
+    while not context.join():
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/multiprocessing/spawn.py", line 215, in join
+    raise ProcessRaisedException(msg, error_index, failed_process.pid)
+torch.multiprocessing.spawn.ProcessRaisedException: 
+
+-- Process 0 terminated with the following error:
+Traceback (most recent call last):
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/multiprocessing/spawn.py", line 90, in _wrap
+    fn(i, *args)
+  File "/home/goodh/vinc/5003/project/train.py", line 282, in train_and_evaluate
+    dist.init_process_group(backend="nccl", rank=rank, world_size=world_size)
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/distributed/c10d_logger.py", line 81, in wrapper
+    return func(*args, **kwargs)
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/distributed/c10d_logger.py", line 95, in wrapper
+    func_return = func(*args, **kwargs)
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/distributed/distributed_c10d.py", line 1714, in init_process_group
+    store, rank, world_size = next(rendezvous_iterator)
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/distributed/rendezvous.py", line 274, in _env_rendezvous_handler
+    store = _create_c10d_store(
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/distributed/rendezvous.py", line 194, in _create_c10d_store
+    return TCPStore(
+RuntimeError: The server socket has failed to listen on any local network address. port: 12347, useIpv6: 0, code: -98, name: EADDRINUSE, message: address already in use
+
+INFO:py4j.clientserver:Closing down clientserver connection

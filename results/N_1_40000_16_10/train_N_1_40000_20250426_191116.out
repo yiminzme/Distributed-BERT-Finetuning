@@ -1,0 +1,57 @@
+INFO:__main__:Initializing Spark...
+INFO:__main__:14 cores for spark
+25/04/26 19:11:20 WARN Utils: Your hostname, yPC resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+25/04/26 19:11:20 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/goodh/.ivy2/cache
+The jars for the packages stored in: /home/goodh/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-8d0e402c-b74b-4bbf-9f4d-dd05cd11fb8f;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 84ms :: artifacts dl 5ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-8d0e402c-b74b-4bbf-9f4d-dd05cd11fb8f
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/3ms)
+25/04/26 19:11:20 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/26 19:11:21 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 19:11:54 WARN TaskSetManager: Stage 0 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                        (0 + 14) / 14]                                                                                INFO:__main__:Data loading to MongoDB took 34.75 seconds
+INFO:__main__:Distributed preprocessing and saving to Parquet...
+INFO:__main__:Reading data from MongoDB...
+INFO:__main__:Applying text preprocessing (lowercase, remove punctuation, non-alnum, continuous whitespace, strip)...
+INFO:__main__:Tokenizing data...
+INFO:__main__:num_samples[40000]
+INFO:__main__:num_partitions 14
+INFO:__main__:Writing Parquet files: train=processed_data/train_3db521062a9342de958f4693033b2a99, test=processed_data/test_c84e61a78a004fc9a8128b4235707997, sst2=processed_data/sst2_3da76eea7eda472dbc198247351f5a3d
+25/04/26 19:11:57 WARN TaskSetManager: Stage 2 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 2:>                                                        (0 + 14) / 28][Stage 2:==============>                                          (7 + 14) / 28][Stage 2:================>                                        (8 + 14) / 28][Stage 2:==================>                                      (9 + 14) / 28][Stage 2:======================>                                 (11 + 14) / 28][Stage 2:============================>                           (14 + 14) / 28][Stage 2:================================>                       (16 + 12) / 28][Stage 2:==================================>                     (17 + 11) / 28][Stage 2:======================================>                  (19 + 9) / 28][Stage 2:========================================>                (20 + 8) / 28][Stage 2:==========================================>              (21 + 7) / 28][Stage 2:============================================>            (22 + 6) / 28][Stage 2:==============================================>          (23 + 5) / 28][Stage 7:>                                                        (0 + 14) / 14]                                                                                INFO:__main__:27.2718s for train_df partition
+25/04/26 19:12:24 WARN TaskSetManager: Stage 8 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 8:>                                                        (0 + 14) / 28][Stage 8:==>                                                      (1 + 14) / 28][Stage 8:========>                                                (4 + 14) / 28][Stage 8:====================>                                   (10 + 14) / 28][Stage 8:==========================>                             (13 + 14) / 28][Stage 8:==============================>                         (15 + 13) / 28][Stage 8:================================>                       (16 + 12) / 28][Stage 8:==================================>                     (17 + 11) / 28][Stage 8:========================================>                (20 + 8) / 28][Stage 8:============================================>            (22 + 6) / 28][Stage 8:==============================================>          (23 + 5) / 28][Stage 8:================================================>        (24 + 4) / 28][Stage 8:==================================================>      (25 + 3) / 28][Stage 8:====================================================>    (26 + 2) / 28][Stage 8:======================================================>  (27 + 1) / 28]                                                                                INFO:__main__:19.0784s for test_df partition
+25/04/26 19:12:43 WARN TaskSetManager: Stage 14 contains a task of very large size (3984 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 14:=========================>                             (13 + 14) / 28][Stage 14:===========================>                           (14 + 14) / 28][Stage 14:===============================>                       (16 + 12) / 28][Stage 14:=================================>                     (17 + 11) / 28][Stage 14:==========================================>             (21 + 7) / 28][Stage 14:============================================>           (22 + 6) / 28][Stage 14:====================================================>   (26 + 2) / 28][Stage 14:======================================================> (27 + 1) / 28]                                                                                INFO:__main__:10.5529s for sst2_df partition
+INFO:__main__:Distributed preprocessing took 57.10 seconds
+INFO:__main__:2025/04/26-19:12:53	NUM_CPUs[14]		NUM_GPUs[1]		NUM_TRAIN_SAMPLES[40000]		preprocess_time[57.10 sec]
+
+INFO:py4j.clientserver:Closing down clientserver connection

@@ -1,0 +1,58 @@
+INFO:__main__:Initializing Spark...
+INFO:__main__:4 cores for spark
+25/04/26 19:02:49 WARN Utils: Your hostname, yPC resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+25/04/26 19:02:49 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/goodh/.ivy2/cache
+The jars for the packages stored in: /home/goodh/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-3a760df3-160e-4b06-8f34-1a84b8f86314;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 83ms :: artifacts dl 5ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-3a760df3-160e-4b06-8f34-1a84b8f86314
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/3ms)
+25/04/26 19:02:49 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/26 19:02:50 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 19:03:19 WARN TaskSetManager: Stage 0 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                          (0 + 4) / 4]                                                                                25/04/26 19:03:21 WARN TaskSetManager: Stage 1 contains a task of very large size (1012 KiB). The maximum recommended task size is 1000 KiB.
+INFO:__main__:Data loading to MongoDB took 31.16 seconds
+INFO:__main__:Distributed preprocessing and saving to Parquet...
+INFO:__main__:Reading data from MongoDB...
+INFO:__main__:Applying text preprocessing (lowercase, remove punctuation, non-alnum, continuous whitespace, strip)...
+INFO:__main__:Tokenizing data...
+INFO:__main__:num_samples[40000]
+INFO:__main__:num_partitions 4
+INFO:__main__:Writing Parquet files: train=processed_data/train_e35a7a80f3254a71b724d393db23b56d, test=processed_data/test_2798d978e4f04c52b931b79bae62d395, sst2=processed_data/sst2_27dd664b5bd74fe3b6dd4e201e2fa4ee
+25/04/26 19:03:22 WARN TaskSetManager: Stage 2 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 2:>                                                          (0 + 4) / 8][Stage 2:==============>                                            (2 + 4) / 8][Stage 2:=============================>                             (4 + 4) / 8][Stage 2:====================================>                      (5 + 3) / 8][Stage 2:===================================================>       (7 + 1) / 8][Stage 7:>                                                          (0 + 4) / 4]                                                                                INFO:__main__:46.8684s for train_df partition
+25/04/26 19:04:08 WARN TaskSetManager: Stage 8 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 8:>                                                          (0 + 4) / 8][Stage 8:=======>                                                   (1 + 4) / 8][Stage 8:====================================>                      (5 + 3) / 8][Stage 8:============================================>              (6 + 2) / 8][Stage 8:===================================================>       (7 + 1) / 8]                                                                                INFO:__main__:39.8569s for test_df partition
+25/04/26 19:04:48 WARN TaskSetManager: Stage 14 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+INFO:__main__:0.8859s for sst2_df partition
+INFO:__main__:Distributed preprocessing took 87.79 seconds
+INFO:__main__:2025/04/26-19:04:49	NUM_CPUs[4]		NUM_GPUs[1]		NUM_TRAIN_SAMPLES[40000]		preprocess_time[87.79 sec]
+
+INFO:py4j.clientserver:Closing down clientserver connection

@@ -610,6 +610,8 @@ if __name__ == "__main__":
     # append results
     result = f"{time.strftime('%Y/%m/%d-%H:%M:%S')}\tNUM_CPUs[{NUM_CPUs}]\t\tNUM_GPUs[{NUM_GPUs}]\t\tNUM_TRAIN_SAMPLES[{NUM_TRAIN_SAMPLES}]\t\tpreprocess_time[{preprocess_time:.2f} sec]\t\tfinetune_time[{finetune_time[0]:.2f} sec]" + \
         "\n"
+    # result = f"{time.strftime('%Y/%m/%d-%H:%M:%S')}\tNUM_CPUs[{NUM_CPUs}]\t\tNUM_GPUs[{NUM_GPUs}]\t\tNUM_TRAIN_SAMPLES[{NUM_TRAIN_SAMPLES}]\t\tpreprocess_time[{preprocess_time:.2f} sec]" + \
+        # "\n"
     logger.info(result)
     with open("out/results.out", "a") as f:
         f.write(result)

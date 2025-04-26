@@ -1,0 +1,118 @@
+INFO:__main__:Initializing Spark...
+INFO:__main__:4 cores for spark
+25/04/26 16:43:11 WARN Utils: Your hostname, yPC resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+25/04/26 16:43:11 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/goodh/.ivy2/cache
+The jars for the packages stored in: /home/goodh/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-d8042a98-2ce6-4353-946e-282f8792aee0;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 85ms :: artifacts dl 3ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-d8042a98-2ce6-4353-946e-282f8792aee0
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/3ms)
+25/04/26 16:43:12 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/26 16:43:12 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 16:43:42 WARN TaskSetManager: Stage 0 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                          (0 + 4) / 4]                                                                                25/04/26 16:43:44 WARN TaskSetManager: Stage 1 contains a task of very large size (1012 KiB). The maximum recommended task size is 1000 KiB.
+INFO:__main__:Data loading to MongoDB took 31.92 seconds
+INFO:__main__:Distributed preprocessing and saving to Parquet...
+INFO:__main__:Reading data from MongoDB...
+INFO:__main__:Applying text preprocessing (lowercase, remove punctuation, non-alnum, continuous whitespace, strip)...
+INFO:__main__:Tokenizing data...
+INFO:__main__:num_samples[2500]
+INFO:__main__:num_partitions 4
+INFO:__main__:Writing Parquet files: train=processed_data/train_98d66dc990e44d0d834c8c0b03db7085, test=processed_data/test_d1347ee173ec4195836395cefb0ccac2, sst2=processed_data/sst2_1f8d33a9e81543ebab9a8320ef349562
+25/04/26 16:43:45 WARN TaskSetManager: Stage 2 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 2:>                                                          (0 + 4) / 8][Stage 2:=======>                                                   (1 + 4) / 8][Stage 2:======================>                                    (3 + 4) / 8][Stage 2:====================================>                      (5 + 3) / 8][Stage 2:============================================>              (6 + 2) / 8]                                                                                INFO:__main__:45.8063s for train_df partition
+25/04/26 16:44:31 WARN TaskSetManager: Stage 8 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 8:>                                                          (0 + 4) / 8][Stage 8:==============>                                            (2 + 4) / 8][Stage 8:====================================>                      (5 + 3) / 8]                                                                                INFO:__main__:38.1502s for test_df partition
+25/04/26 16:45:09 WARN TaskSetManager: Stage 14 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 14:=============================>                            (4 + 4) / 8][Stage 14:==================================================>       (7 + 1) / 8]                                                                                INFO:__main__:1.4299s for sst2_df partition
+INFO:__main__:Distributed preprocessing took 85.55 seconds
+INFO:__main__:Using 1 GPU(s)
+INFO:__main__:Distributed fine-tuning...
+INFO:__mp_main__:Rank 0: Local train batch count = 156, Global min train batch count = 156
+INFO:__mp_main__:Rank 0: Local test batch count = 31, Global min test batch count = 31
+INFO:__mp_main__:Rank 0: Local sst2_test batch count = 31, Global min sst2_test batch count = 31
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/distributed/fsdp/_init_utils.py:444: UserWarning: FSDP is switching to use `NO_SHARD` instead of ShardingStrategy.FULL_SHARD since the world size is 1.
+  warnings.warn(
+INFO:__mp_main__:Epoch 1, Avg Training Loss: 0.1649
+INFO:__mp_main__:GPU[0], Epoch 1, Avg Loss: 0.1649
+INFO:__mp_main__:Epoch 1, IMDB Test Eval Loss: 0.0198, Accuracy: 1.0000
+INFO:__mp_main__:Epoch 1, SST-2 Test Eval Loss: 1.1091, Accuracy: 0.4335
+INFO:__mp_main__:Epoch 2, Avg Training Loss: 0.0163
+INFO:__mp_main__:GPU[0], Epoch 2, Avg Loss: 0.0163
+INFO:__mp_main__:Epoch 2, IMDB Test Eval Loss: 0.0068, Accuracy: 1.0000
+INFO:__mp_main__:Epoch 2, SST-2 Test Eval Loss: 1.3999, Accuracy: 0.4375
+INFO:__mp_main__:Epoch 3, Avg Training Loss: 0.0072
+INFO:__mp_main__:GPU[0], Epoch 3, Avg Loss: 0.0072
+INFO:__mp_main__:Epoch 3, IMDB Test Eval Loss: 0.0036, Accuracy: 1.0000
+INFO:__mp_main__:Epoch 3, SST-2 Test Eval Loss: 1.6078, Accuracy: 0.4375
+INFO:__mp_main__:Epoch 4, Avg Training Loss: 0.0043
+INFO:__mp_main__:GPU[0], Epoch 4, Avg Loss: 0.0043
+INFO:__mp_main__:Epoch 4, IMDB Test Eval Loss: 0.0022, Accuracy: 1.0000
+INFO:__mp_main__:Epoch 4, SST-2 Test Eval Loss: 1.7892, Accuracy: 0.4375
+INFO:__mp_main__:Epoch 5, Avg Training Loss: 0.0028
+INFO:__mp_main__:GPU[0], Epoch 5, Avg Loss: 0.0028
+INFO:__mp_main__:Epoch 5, IMDB Test Eval Loss: 0.0015, Accuracy: 1.0000
+INFO:__mp_main__:Epoch 5, SST-2 Test Eval Loss: 1.9493, Accuracy: 0.4355
+INFO:__mp_main__:Epoch 6, Avg Training Loss: 0.0020
+INFO:__mp_main__:GPU[0], Epoch 6, Avg Loss: 0.0020
+INFO:__mp_main__:Epoch 6, IMDB Test Eval Loss: 0.0011, Accuracy: 1.0000
+INFO:__mp_main__:Epoch 6, SST-2 Test Eval Loss: 2.0882, Accuracy: 0.4355
+INFO:__mp_main__:Epoch 7, Avg Training Loss: 0.0015
+INFO:__mp_main__:GPU[0], Epoch 7, Avg Loss: 0.0015
+INFO:__mp_main__:Epoch 7, IMDB Test Eval Loss: 0.0008, Accuracy: 1.0000
+INFO:__mp_main__:Epoch 7, SST-2 Test Eval Loss: 2.2145, Accuracy: 0.4355
+INFO:__mp_main__:Epoch 8, Avg Training Loss: 0.0011
+INFO:__mp_main__:GPU[0], Epoch 8, Avg Loss: 0.0011
+INFO:__mp_main__:Epoch 8, IMDB Test Eval Loss: 0.0006, Accuracy: 1.0000
+INFO:__mp_main__:Epoch 8, SST-2 Test Eval Loss: 2.3231, Accuracy: 0.4355
+INFO:__mp_main__:Epoch 9, Avg Training Loss: 0.0009
+INFO:__mp_main__:GPU[0], Epoch 9, Avg Loss: 0.0009
+INFO:__mp_main__:Epoch 9, IMDB Test Eval Loss: 0.0005, Accuracy: 1.0000
+INFO:__mp_main__:Epoch 9, SST-2 Test Eval Loss: 2.4301, Accuracy: 0.4375
+INFO:__mp_main__:Epoch 10, Avg Training Loss: 0.0007
+INFO:__mp_main__:GPU[0], Epoch 10, Avg Loss: 0.0007
+INFO:__mp_main__:Epoch 10, IMDB Test Eval Loss: 0.0004, Accuracy: 1.0000
+INFO:__mp_main__:Epoch 10, SST-2 Test Eval Loss: 2.5212, Accuracy: 0.4375
+INFO:__mp_main__:Training wall time (max across ranks): 68.77 seconds
+/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/distributed/fsdp/_state_dict_utils.py:773: UserWarning: When using ``NO_SHARD`` for ``ShardingStrategy``, full_state_dict willbe returned.
+  warnings.warn(
+/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/distributed/fsdp/_state_dict_utils.py:711: UserWarning: When using ``NO_SHARD`` for ``ShardingStrategy``, full_state_dict willbe returned.
+  warnings.warn(
+INFO:__mp_main__:Checkpoint saved at checkpoints/20250426_164624_bert_finetuned_epoch_10.pt
+INFO:__mp_main__:IMDB Test Accuracy: 1.0
+INFO:__mp_main__:GPU[0]: IMDB Test Accuracy: 1.0000
+INFO:__mp_main__:SST-2 Test Accuracy: 0.4375
+INFO:__mp_main__:GPU[0]: SST-2 Test Accuracy: 0.4375
+INFO:__main__:Loss curves saved at plots/loss_curves_20250426_164627.png
+INFO:__main__:2025/04/26-16:46:27	NUM_CPUs[4]		NUM_GPUs[1]		NUM_TRAIN_SAMPLES[2500]		preprocess_time[85.55 sec]		finetune_time[68.77 sec]
+
+INFO:py4j.clientserver:Closing down clientserver connection

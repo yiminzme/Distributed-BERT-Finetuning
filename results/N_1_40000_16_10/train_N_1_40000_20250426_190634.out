@@ -1,0 +1,57 @@
+INFO:__main__:Initializing Spark...
+INFO:__main__:8 cores for spark
+25/04/26 19:06:38 WARN Utils: Your hostname, yPC resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+25/04/26 19:06:38 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/goodh/.ivy2/cache
+The jars for the packages stored in: /home/goodh/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-44af648b-070d-4237-9045-1daf96d71f24;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 83ms :: artifacts dl 4ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-44af648b-070d-4237-9045-1daf96d71f24
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/2ms)
+25/04/26 19:06:38 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/26 19:06:39 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 19:07:10 WARN TaskSetManager: Stage 0 contains a task of very large size (7982 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                          (0 + 8) / 8]                                                                                INFO:__main__:Data loading to MongoDB took 32.92 seconds
+INFO:__main__:Distributed preprocessing and saving to Parquet...
+INFO:__main__:Reading data from MongoDB...
+INFO:__main__:Applying text preprocessing (lowercase, remove punctuation, non-alnum, continuous whitespace, strip)...
+INFO:__main__:Tokenizing data...
+INFO:__main__:num_samples[40000]
+INFO:__main__:num_partitions 8
+INFO:__main__:Writing Parquet files: train=processed_data/train_3e784055586647c4b1a2cfc46bd3c12c, test=processed_data/test_c791dbb02ba542978876b50cd30a235f, sst2=processed_data/sst2_2190000daa7643199a47bd4ad46a2f39
+25/04/26 19:07:13 WARN TaskSetManager: Stage 2 contains a task of very large size (7982 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 2:>                                                         (0 + 8) / 16][Stage 2:=======>                                                  (2 + 8) / 16][Stage 2:=====================>                                    (6 + 8) / 16][Stage 2:=========================>                                (7 + 8) / 16][Stage 2:================================>                         (9 + 7) / 16][Stage 2:===================================>                     (10 + 6) / 16][Stage 2:=======================================>                 (11 + 5) / 16][Stage 2:=================================================>       (14 + 2) / 16][Stage 2:=====================================================>   (15 + 1) / 16][Stage 7:>                                                          (0 + 8) / 8]                                                                                INFO:__main__:30.2698s for train_df partition
+25/04/26 19:07:43 WARN TaskSetManager: Stage 8 contains a task of very large size (7982 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 8:>                                                         (0 + 8) / 16][Stage 8:==========>                                               (3 + 8) / 16][Stage 8:==================>                                       (5 + 9) / 16][Stage 8:=======================================>                 (11 + 5) / 16][Stage 8:==========================================>              (12 + 4) / 16][Stage 8:=====================================================>   (15 + 1) / 16]                                                                                INFO:__main__:22.4775s for test_df partition
+25/04/26 19:08:05 WARN TaskSetManager: Stage 14 contains a task of very large size (7982 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 14:============================>                            (8 + 8) / 16][Stage 14:===================================>                    (10 + 6) / 16][Stage 14:=============================================>          (13 + 3) / 16][Stage 14:====================================================>   (15 + 1) / 16]                                                                                INFO:__main__:4.1444s for sst2_df partition
+INFO:__main__:Distributed preprocessing took 57.08 seconds
+INFO:__main__:2025/04/26-19:08:09	NUM_CPUs[8]		NUM_GPUs[1]		NUM_TRAIN_SAMPLES[40000]		preprocess_time[57.08 sec]
+
+INFO:py4j.clientserver:Closing down clientserver connection

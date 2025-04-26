@@ -1,0 +1,105 @@
+INFO:__main__:Initializing Spark...
+INFO:__main__:4 cores for spark
+25/04/26 20:06:49 WARN Utils: Your hostname, yPC resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+25/04/26 20:06:49 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/goodh/.ivy2/cache
+The jars for the packages stored in: /home/goodh/.ivy2/jars
+org.mongodb.spark#mongo-spark-connector_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-e5f81d66-61e2-4f11-824b-7b2a609c2951;1.0
+	confs: [default]
+	found org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 in central
+	found org.mongodb#mongodb-driver-sync;4.0.5 in central
+	found org.mongodb#bson;4.0.5 in central
+	found org.mongodb#mongodb-driver-core;4.0.5 in central
+:: resolution report :: resolve 100ms :: artifacts dl 3ms
+	:: modules in use:
+	org.mongodb#bson;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-core;4.0.5 from central in [default]
+	org.mongodb#mongodb-driver-sync;4.0.5 from central in [default]
+	org.mongodb.spark#mongo-spark-connector_2.12;3.0.1 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-e5f81d66-61e2-4f11-824b-7b2a609c2951
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/3ms)
+25/04/26 20:06:50 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/26 20:06:51 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+INFO:__main__:No cached Parquet files found. Running full pipeline...
+INFO:__main__:Loading data to MongoDB...
+INFO:__main__:Loading IMDB dataset...
+INFO:__main__:Loading SST-2 dataset...
+INFO:__main__:Writing datasets to MongoDB...
+25/04/26 20:07:21 WARN TaskSetManager: Stage 0 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 0:>                                                          (0 + 4) / 4]                                                                                25/04/26 20:07:23 WARN TaskSetManager: Stage 1 contains a task of very large size (1012 KiB). The maximum recommended task size is 1000 KiB.
+INFO:__main__:Data loading to MongoDB took 32.31 seconds
+INFO:__main__:Distributed preprocessing and saving to Parquet...
+INFO:__main__:Reading data from MongoDB...
+INFO:__main__:Applying text preprocessing (lowercase, remove punctuation, non-alnum, continuous whitespace, strip)...
+INFO:__main__:Tokenizing data...
+INFO:__main__:num_samples[40000]
+INFO:__main__:num_partitions 4
+INFO:__main__:Writing Parquet files: train=processed_data/train_8e1d327f86454b92b5b3dc7713b7e8d6, test=processed_data/test_7a42982aed084240a99d63d541700984, sst2=processed_data/sst2_f0cb34a9c8734cb5aa4dcedba17357a3
+25/04/26 20:07:24 WARN TaskSetManager: Stage 2 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 2:>                                                          (0 + 4) / 8][Stage 2:=======>                                                   (1 + 4) / 8][Stage 2:==============>                                            (2 + 4) / 8][Stage 2:====================================>                      (5 + 3) / 8][Stage 2:============================================>              (6 + 2) / 8][Stage 2:===================================================>       (7 + 1) / 8][Stage 7:>                                                          (0 + 4) / 4]                                                                                INFO:__main__:52.3208s for train_df partition
+25/04/26 20:08:16 WARN TaskSetManager: Stage 8 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 8:>                                                          (0 + 4) / 8][Stage 8:=======>                                                   (1 + 4) / 8][Stage 8:====================================>                      (5 + 3) / 8][Stage 8:============================================>              (6 + 2) / 8][Stage 8:===================================================>       (7 + 1) / 8]                                                                                INFO:__main__:37.5330s for test_df partition
+25/04/26 20:08:53 WARN TaskSetManager: Stage 14 contains a task of very large size (15859 KiB). The maximum recommended task size is 1000 KiB.
+[Stage 14:=============================>                            (4 + 4) / 8][Stage 14:==================================================>       (7 + 1) / 8]                                                                                INFO:__main__:3.5102s for sst2_df partition
+INFO:__main__:Distributed preprocessing took 93.54 seconds
+INFO:__main__:Using 1 GPU(s)
+INFO:__main__:Distributed fine-tuning...
+INFO:__mp_main__:Rank 0: Local train batch count = 2500, Global min train batch count = 2500
+INFO:__mp_main__:Rank 0: Local test batch count = 500, Global min test batch count = 500
+INFO:__mp_main__:Rank 0: Local sst2_test batch count = 500, Global min sst2_test batch count = 500
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/distributed/fsdp/_init_utils.py:444: UserWarning: FSDP is switching to use `NO_SHARD` instead of ShardingStrategy.FULL_SHARD since the world size is 1.
+  warnings.warn(
+INFO:__mp_main__:Epoch 1, Avg Training Loss: 0.4370
+INFO:__mp_main__:GPU[0], Epoch 1, Avg Loss: 0.4370
+INFO:__mp_main__:Epoch 1, IMDB Test Eval Loss: 0.3158, Accuracy: 0.8782
+INFO:__mp_main__:Epoch 1, SST-2 Test Eval Loss: 0.4406, Accuracy: 0.7985
+INFO:__mp_main__:Epoch 2, Avg Training Loss: 0.3581
+INFO:__mp_main__:GPU[0], Epoch 2, Avg Loss: 0.3581
+INFO:__mp_main__:Epoch 2, IMDB Test Eval Loss: 0.3349, Accuracy: 0.8805
+INFO:__mp_main__:Epoch 2, SST-2 Test Eval Loss: 0.4307, Accuracy: 0.8079
+INFO:__mp_main__:Epoch 3, Avg Training Loss: 0.3458
+INFO:__mp_main__:GPU[0], Epoch 3, Avg Loss: 0.3458
+INFO:__mp_main__:Epoch 3, IMDB Test Eval Loss: 0.3321, Accuracy: 0.8799
+INFO:__mp_main__:Epoch 3, SST-2 Test Eval Loss: 0.4347, Accuracy: 0.8083
+INFO:__mp_main__:Epoch 4, Avg Training Loss: 0.3341
+INFO:__mp_main__:GPU[0], Epoch 4, Avg Loss: 0.3341
+INFO:__mp_main__:Epoch 4, IMDB Test Eval Loss: 0.3043, Accuracy: 0.8908
+INFO:__mp_main__:Epoch 4, SST-2 Test Eval Loss: 0.4226, Accuracy: 0.8145
+Traceback (most recent call last):
+  File "/home/goodh/vinc/5003/project/train.py", line 574, in <module>
+    mp.spawn(
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/multiprocessing/spawn.py", line 340, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method="spawn")
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/multiprocessing/spawn.py", line 296, in start_processes
+    while not context.join():
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/torch/multiprocessing/spawn.py", line 144, in join
+    ready = multiprocessing.connection.wait(
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/multiprocessing/connection.py", line 931, in wait
+    ready = selector.select(timeout)
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/selectors.py", line 416, in select
+    fd_event_list = self._selector.poll(timeout)
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/pyspark/context.py", line 382, in signal_handler
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+[rank0]:[W426 20:16:27.193360641 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/multiprocessing/popen_fork.py", line 27, in poll
+    pid, sts = os.waitpid(self.pid, flag)
+  File "/home/goodh/miniconda3/envs/5003/lib/python3.9/site-packages/pyspark/context.py", line 382, in signal_handler
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+INFO:py4j.clientserver:Closing down clientserver connection
